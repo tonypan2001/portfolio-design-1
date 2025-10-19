@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Environment, Float } from "@react-three/drei"
 import { Button } from "@/components/ui/button"
@@ -17,21 +17,34 @@ function Scene() {
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1} />
-      <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+      <Float speed={1.6} rotationIntensity={0.45} floatIntensity={0.45}>
         <mesh>
-          <torusKnotGeometry args={[1, 0.3, 128, 16]} />
+          <torusKnotGeometry args={[1, 0.3, 96, 12]} />
           <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.2} />
         </mesh>
       </Float>
-      <OrbitControls enableZoom={false} enablePan={false} />
+      <OrbitControls enableZoom={false} enablePan={false} enableDamping dampingFactor={0.08} />
       <Environment preset="city" />
     </>
   )
 }
 
 export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
+  const [isScrolling, setIsScrolling] = useState(false)
+  const scrollTimer = useRef<number | null>(null)
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!isScrolling) setIsScrolling(true)
+      if (scrollTimer.current) window.clearTimeout(scrollTimer.current)
+      scrollTimer.current = window.setTimeout(() => setIsScrolling(false), 180)
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [isScrolling])
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="scroll-section relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/20" />
 
@@ -51,8 +64,12 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
           </div>
 
           {/* 3D Model Container */}
-          <div className="w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px] mb-8 md:mb-12">
-            <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+          <div className="w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px] mb-8 md:mb-12" style={{ willChange: "transform", transform: "translateZ(0)" }}>
+            <Canvas
+              camera={{ position: [0, 0, 5], fov: 50 }}
+              dpr={isScrolling ? 1 : [1, 1.5]}
+              gl={{ powerPreference: "high-performance", antialias: true }}
+            >
               <Suspense fallback={null}>
                 <Scene />
               </Suspense>

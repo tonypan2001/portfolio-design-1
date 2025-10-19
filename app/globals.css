@@ -125,5 +125,22 @@
   }
   html {
     scroll-behavior: smooth;
+    /* Ensure anchored scroll accounts for fixed navbar height */
+    scroll-padding-top: 80px;
+    /* Prevent layout shift when scrollbars appear */
+    scrollbar-gutter: stable both-edges;
   }
+}
+
+/* Performance helpers for smoother scrolling */
+.composite-layer {
+  will-change: transform;
+  transform: translateZ(0);
+  contain: paint;
+}
+
+.scroll-section {
+  content-visibility: auto;
+  /* Reserve space for offscreen content to reduce layout jumps */
+  contain-intrinsic-size: 800px 1000px;
 }

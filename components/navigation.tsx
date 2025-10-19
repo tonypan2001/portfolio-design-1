@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
+import { smoothScrollToElement } from "@/lib/smooth-scroll"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
@@ -15,49 +16,65 @@ const menuItems = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
+  const rafTick = useRef(false)
 
+  // Throttled scroll handler just for navbar style
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-
-      // Determine active section based on scroll position
-      const sections = menuItems.map((item) => item.href.substring(1))
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
+    const onScroll = () => {
+      if (rafTick.current) return
+      rafTick.current = true
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50)
+        rafTick.current = false
+      })
     }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+  // Active section via IntersectionObserver (no layout reads in scroll handler)
+  useEffect(() => {
+    const navHeight = 80
+    const ids = menuItems.map((item) => item.href.substring(1))
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el))
+
+    if (elements.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))
+        if (visible[0]?.target?.id) {
+          setActiveSection(visible[0].target.id)
+        }
+      },
+      {
+        root: null,
+        rootMargin: `-${navHeight + 10}px 0px -55% 0px`,
+        threshold: [0, 0.15, 0.25, 0.5, 0.75, 1],
+      },
+    )
+
+    elements.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
   }, [])
 
   const handleNavClick = (href: string) => {
     const element = document.getElementById(href.substring(1))
     if (element) {
       const navHeight = 80 // Height of the fixed navbar
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY
-      const offsetPosition = elementPosition - navHeight
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
+      smoothScrollToElement(element, { offset: navHeight, duration: 850, respectReducedMotion: false })
     }
   }
 
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 composite-layer",
         isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm" : "bg-transparent",
       )}
     >
@@ -65,7 +82,14 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#home" className="text-xl md:text-2xl font-bold text-foreground">
+            <a
+              href="#home"
+              className="text-xl md:text-2xl font-bold text-foreground"
+              onClick={(e) => {
+                e.preventDefault()
+                handleNavClick("#home")
+              }}
+            >
               Logo
             </a>
           </div>
