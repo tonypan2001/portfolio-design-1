@@ -78,7 +78,7 @@ export function Navigation() {
                 variant="ghost"
                 onClick={() => handleNavClick(item.href)}
                 className={cn(
-                  "relative text-sm font-medium transition-colors",
+                  "relative text-sm font-medium transition-colors cursor-pointer",
                   activeSection === item.href.substring(1)
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground",
