@@ -118,7 +118,7 @@ export default function ParticleNetwork({
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="fixed inset-0 -z-10 bg-black"
+      className="fixed inset-0 -z-10 bg-primary"
     />
   );
 }
