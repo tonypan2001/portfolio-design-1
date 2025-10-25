@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { hero } from "@/constants/contents";
+import { hero, heroCard } from "@/constants/contents";
 import ParticleNetwork from "./canvas/particle-network";
 
 interface HeroSectionProps {
@@ -99,50 +99,49 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
                 <Scene />
               </Suspense>
             </Canvas>
-            {/* Overlay Card inside hero scope */}
-            <div className="pointer-events-auto absolute bottom-4 md:bottom-6 z-10">
-              <div
-                className={cn(
-                  "w-full max-w-5xl mx-auto px-4",
-                  cardPosition === "left" && "flex justify-start",
-                  cardPosition === "middle" && "flex justify-center",
-                  cardPosition === "right" && "flex justify-end",
-                )}
-              >
-                <Card className="w-full md:w-[400px] backdrop-blur-sm bg-card/80 border-border/50 shadow-xl">
-                  <CardHeader>
-                    <CardTitle className="text-2xl md:text-3xl">
-                      Discover More
-                    </CardTitle>
-                    <CardDescription className="text-base">
-                      Explore our innovative features and cutting-edge
-                      technology
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3 mb-6">
-                      <li className="flex items-center gap-2 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-                        <span>Interactive 3D experiences</span>
-                      </li>
-                      <li className="flex items-center gap-2 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-                        <span>Responsive across all devices</span>
-                      </li>
-                      <li className="flex items-center gap-2 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-                        <span>Modern glassmorphic design</span>
-                      </li>
-                    </ul>
-                    <Button className="w-full group" size="lg">
-                      Explore Now
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
           </div>
+        </div>
+      </div>
+      {/* Section-level overlay Card: bottom on mobile, bottom-left on desktop */}
+      <div className="w-full pointer-events-auto absolute bottom-6 md:bottom-40 flex items-start z-20">
+        <div
+          className={cn(
+            // Keep within hero container scope
+            "w-full pl-8 pr-8 md:pl-32 md:pr-0 flex justify-start",
+            // Desktop left alignment with small left padding
+            cardPosition === "left" && "md:justify-start",
+            // Desktop middle/right alignment
+            cardPosition === "middle" && "md:justify-center",
+            cardPosition === "right" && "md:justify-end",
+          )}
+        >
+          <Card className="w-full md:w-[350px] backdrop-blur-sm bg-card/80 border-border/50 shadow-xl">
+            <CardHeader>
+              <CardTitle className="text-2xl md:text-3xl">
+                Discover More
+              </CardTitle>
+              <CardDescription className="text-base">
+                Explore our innovative features and cutting-edge technology
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-3 mb-6">
+                {heroCard.heroCardBulletPoint.map((item) => (
+                  <li
+                    key={item.key}
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
+                    <span>{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button className="w-full group cursor-pointer" size="lg">
+                Explore Now
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

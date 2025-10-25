@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Navigation />
-      <HeroSection cardPosition="right" />
+      <HeroSection cardPosition="left" />
 
       {/* Additional sections for scroll demonstration */}
       <section id="features" className="scroll-section min-h-screen flex items-center justify-center bg-secondary/30">

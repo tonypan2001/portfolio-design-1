@@ -17,9 +17,9 @@ export const heroCard = {
   heroCardTextDetail:
     "Explore our innovative features and cutting-edge technology",
   heroCardBulletPoint: [
-    "Interactive 3D experiences",
-    "Responsive across all devices",
-    "Modern glassmorphic design",
+    { key: "01", text: "Interactive 3D experiences" },
+    { key: "02", text: "Responsive across all devices" },
+    { key: "03", text: "Modern glassmorphic design" },
   ],
 };
 
