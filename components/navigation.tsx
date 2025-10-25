@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { menuItems } from "@/constants/contents";
+import { navigation } from "@/constants/contents";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,7 +36,7 @@ export function Navigation() {
   // Active section via IntersectionObserver (no layout reads in scroll handler)
   useEffect(() => {
     const navHeight = 80;
-    const ids = menuItems.map((item) => item.href.substring(1));
+    const ids = navigation.menuItems.map((item) => item.href.substring(1));
     const elements = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el));
@@ -98,13 +98,13 @@ export function Navigation() {
                 handleNavClick("#home");
               }}
             >
-              Logo
+              {navigation.logo}
             </a>
           </div>
 
           {/* Desktop Menu - Center */}
           <div className="hidden md:flex items-center gap-1">
-            {menuItems.map((item) => (
+            {navigation.menuItems.map((item) => (
               <Button
                 key={item.href}
                 variant="ghost"
@@ -168,7 +168,7 @@ export function Navigation() {
         {/* Mobile Menu */}
         <div id="mobile-menu" className="hidden md:hidden pb-4">
           <div className="flex flex-col gap-2">
-            {menuItems.map((item) => (
+            {navigation.menuItems.map((item) => (
               <Button
                 key={item.href}
                 variant="ghost"

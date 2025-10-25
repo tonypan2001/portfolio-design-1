@@ -1,9 +1,12 @@
-export const menuItems = [
-  { label: "Home", href: "#home" },
-  { label: "Features", href: "#features" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
+export const navigation = {
+  logo: "PanStudio",
+  menuItems: [
+    { label: "Home", href: "#home" },
+    { label: "Features", href: "#features" },
+    { label: "About", href: "#about" },
+    { label: "Contact", href: "#contact" },
+  ],
+};
 
 export const hero = {
   heroText: "Welcome to",
