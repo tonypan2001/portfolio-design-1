@@ -122,13 +122,15 @@
     }
     body {
         @apply bg-background text-foreground;
+        /* Prevent accidental horizontal scroll/whitespace from absolute/fixed layers */
+        overflow-x: hidden;
     }
     html {
         scroll-behavior: smooth;
         /* Ensure anchored scroll accounts for fixed navbar height */
         scroll-padding-top: 80px;
-        /* Prevent layout shift when scrollbars appear */
-        scrollbar-gutter: stable both-edges;
+        /* Prevent layout shift when scrollbars appear; avoid left gutter */
+        scrollbar-gutter: stable;
     }
 }
 
