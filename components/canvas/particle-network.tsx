@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-
-type Particle = { x: number; y: number; vx: number; vy: number };
+import { Particle } from "@/types/particle-network";
 
 export default function ParticleNetwork({
   count = 80,
