@@ -70,7 +70,7 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/20" />
 
-      <div className="container relative z-10 px-4 py-20 md:py-32">
+      <div className="container relative z-10 px-4 pb-20 md:py-32">
         <div className="flex flex-col items-center">
           {/* Header Text */}
           <div className="text-center mb-8 md:mb-12 max-w-4xl">
