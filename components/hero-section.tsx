@@ -1,15 +1,23 @@
-"use client"
+"use client";
 
-import { Suspense, useEffect, useRef, useState } from "react"
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Environment, Float } from "@react-three/drei"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Suspense, useEffect, useRef, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Environment, Float } from "@react-three/drei";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { hero } from "@/constants/contents";
+import ParticleNetwork from "./canvas/particle-network";
 
 interface HeroSectionProps {
-  cardPosition?: "left" | "middle" | "right"
+  cardPosition?: "left" | "middle" | "right";
 }
 
 function Scene() {
@@ -20,31 +28,45 @@ function Scene() {
       <Float speed={1.6} rotationIntensity={0.45} floatIntensity={0.45}>
         <mesh>
           <torusKnotGeometry args={[1, 0.3, 96, 12]} />
-          <meshStandardMaterial color="#1a1a1a" metalness={0.8} roughness={0.2} />
+          <meshStandardMaterial
+            color="#1a1a1a"
+            metalness={0.8}
+            roughness={0.2}
+          />
         </mesh>
       </Float>
-      <OrbitControls enableZoom={false} enablePan={false} enableDamping dampingFactor={0.08} />
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        enableDamping
+        dampingFactor={0.08}
+      />
       <Environment preset="city" />
     </>
-  )
+  );
 }
 
 export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
-  const [isScrolling, setIsScrolling] = useState(false)
-  const scrollTimer = useRef<number | null>(null)
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimer = useRef<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
-      if (!isScrolling) setIsScrolling(true)
-      if (scrollTimer.current) window.clearTimeout(scrollTimer.current)
-      scrollTimer.current = window.setTimeout(() => setIsScrolling(false), 180)
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [isScrolling])
+      if (!isScrolling) setIsScrolling(true);
+      if (scrollTimer.current) window.clearTimeout(scrollTimer.current);
+      scrollTimer.current = window.setTimeout(() => setIsScrolling(false), 180);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isScrolling]);
 
   return (
-    <section id="home" className="scroll-section relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="scroll-section relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Canvas Background */}
+      <ParticleNetwork />
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/20" />
 
@@ -53,18 +75,21 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
           {/* Header Text */}
           <div className="text-center mb-8 md:mb-12 max-w-4xl">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-balance">
-              Welcome to the Future of{" "}
+              {hero.heroText}{" "}
               <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                3D Web Design
+                {hero.heroTextWithGradient}
               </span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Experience the next generation of web interfaces with stunning 3D elements and modern design
+              {hero.heroTextDetail}
             </p>
           </div>
 
-          {/* 3D Model Container */}
-          <div className="w-full max-w-5xl h-[300px] md:h-[400px] lg:h-[500px] mb-8 md:mb-12" style={{ willChange: "transform", transform: "translateZ(0)" }}>
+          {/* 3D Model Container (relative for overlay card) */}
+          <div
+            className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] mb-8 md:mb-12"
+            style={{ willChange: "transform", transform: "translateZ(0)" }}
+          >
             <Canvas
               camera={{ position: [0, 0, 5], fov: 50 }}
               dpr={isScrolling ? 1 : [1, 1.5]}
@@ -74,48 +99,52 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
                 <Scene />
               </Suspense>
             </Canvas>
-          </div>
-
-          {/* Detail Card with configurable position */}
-          <div
-            className={cn(
-              "w-full max-w-5xl",
-              cardPosition === "left" && "flex justify-start",
-              cardPosition === "middle" && "flex justify-center",
-              cardPosition === "right" && "flex justify-end",
-            )}
-          >
-            <Card className="w-full md:w-[400px] backdrop-blur-sm bg-card/80 border-border/50 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-2xl md:text-3xl">Discover More</CardTitle>
-                <CardDescription className="text-base">
-                  Explore our innovative features and cutting-edge technology
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-center gap-2 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-                    <span>Interactive 3D experiences</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-                    <span>Responsive across all devices</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-                    <span>Modern glassmorphic design</span>
-                  </li>
-                </ul>
-                <Button className="w-full group" size="lg">
-                  Explore Now
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Overlay Card inside hero scope */}
+            <div className="pointer-events-auto absolute bottom-4 md:bottom-6 z-10">
+              <div
+                className={cn(
+                  "w-full max-w-5xl mx-auto px-4",
+                  cardPosition === "left" && "flex justify-start",
+                  cardPosition === "middle" && "flex justify-center",
+                  cardPosition === "right" && "flex justify-end",
+                )}
+              >
+                <Card className="w-full md:w-[400px] backdrop-blur-sm bg-card/80 border-border/50 shadow-xl">
+                  <CardHeader>
+                    <CardTitle className="text-2xl md:text-3xl">
+                      Discover More
+                    </CardTitle>
+                    <CardDescription className="text-base">
+                      Explore our innovative features and cutting-edge
+                      technology
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-center gap-2 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
+                        <span>Interactive 3D experiences</span>
+                      </li>
+                      <li className="flex items-center gap-2 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
+                        <span>Responsive across all devices</span>
+                      </li>
+                      <li className="flex items-center gap-2 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
+                        <span>Modern glassmorphic design</span>
+                      </li>
+                    </ul>
+                    <Button className="w-full group" size="lg">
+                      Explore Now
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

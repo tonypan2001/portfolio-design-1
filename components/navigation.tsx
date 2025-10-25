@@ -1,55 +1,57 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { cn } from "@/lib/utils"
-import { smoothScrollToElement } from "@/lib/smooth-scroll"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const menuItems = [
-  { label: "Home", href: "#home" },
-  { label: "Features", href: "#features" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-]
+import { useState, useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
+import { smoothScrollToElement } from "@/lib/smooth-scroll";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { menuItems } from "@/constants/contents";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("home")
-  const rafTick = useRef(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const rafTick = useRef(false);
 
   // Throttled scroll handler just for navbar style
   useEffect(() => {
     const onScroll = () => {
-      if (rafTick.current) return
-      rafTick.current = true
+      if (rafTick.current) return;
+      rafTick.current = true;
       requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 50)
-        rafTick.current = false
-      })
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+        setIsScrolled(window.scrollY > 50);
+        rafTick.current = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Active section via IntersectionObserver (no layout reads in scroll handler)
   useEffect(() => {
-    const navHeight = 80
-    const ids = menuItems.map((item) => item.href.substring(1))
+    const navHeight = 80;
+    const ids = menuItems.map((item) => item.href.substring(1));
     const elements = ids
       .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el))
+      .filter((el): el is HTMLElement => Boolean(el));
 
-    if (elements.length === 0) return
+    if (elements.length === 0) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))
+          .sort(
+            (a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0),
+          );
         if (visible[0]?.target?.id) {
-          setActiveSection(visible[0].target.id)
+          setActiveSection(visible[0].target.id);
         }
       },
       {
@@ -57,25 +59,31 @@ export function Navigation() {
         rootMargin: `-${navHeight + 10}px 0px -55% 0px`,
         threshold: [0, 0.15, 0.25, 0.5, 0.75, 1],
       },
-    )
+    );
 
-    elements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   const handleNavClick = (href: string) => {
-    const element = document.getElementById(href.substring(1))
+    const element = document.getElementById(href.substring(1));
     if (element) {
-      const navHeight = 80 // Height of the fixed navbar
-      smoothScrollToElement(element, { offset: navHeight, duration: 850, respectReducedMotion: false })
+      const navHeight = 80; // Height of the fixed navbar
+      smoothScrollToElement(element, {
+        offset: navHeight,
+        duration: 850,
+        respectReducedMotion: false,
+      });
     }
-  }
+  };
 
   return (
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 composite-layer",
-        isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm" : "bg-transparent",
+        isScrolled
+          ? "bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm"
+          : "bg-transparent",
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
@@ -86,8 +94,8 @@ export function Navigation() {
               href="#home"
               className="text-xl md:text-2xl font-bold text-foreground"
               onClick={(e) => {
-                e.preventDefault()
-                handleNavClick("#home")
+                e.preventDefault();
+                handleNavClick("#home");
               }}
             >
               Logo
@@ -136,12 +144,22 @@ export function Navigation() {
               size="icon"
               className="md:hidden"
               onClick={() => {
-                const mobileMenu = document.getElementById("mobile-menu")
-                mobileMenu?.classList.toggle("hidden")
+                const mobileMenu = document.getElementById("mobile-menu");
+                mobileMenu?.classList.toggle("hidden");
               }}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </Button>
           </div>
@@ -155,12 +173,16 @@ export function Navigation() {
                 key={item.href}
                 variant="ghost"
                 onClick={() => {
-                  handleNavClick(item.href)
-                  document.getElementById("mobile-menu")?.classList.add("hidden")
+                  handleNavClick(item.href);
+                  document
+                    .getElementById("mobile-menu")
+                    ?.classList.add("hidden");
                 }}
                 className={cn(
                   "justify-start text-sm font-medium",
-                  activeSection === item.href.substring(1) ? "text-foreground bg-accent" : "text-muted-foreground",
+                  activeSection === item.href.substring(1)
+                    ? "text-foreground bg-accent"
+                    : "text-muted-foreground",
                 )}
               >
                 {item.label}
@@ -170,5 +192,5 @@ export function Navigation() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
