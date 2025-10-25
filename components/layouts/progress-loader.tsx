@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LoaderProps } from "@/types/loader";
 
+const FADE_MS = 400; // ปรับได้ 300–600ms ตามชอบ
+
 export default function ProgressLoader({
   assets,
   includeFonts = true,
@@ -15,6 +17,7 @@ export default function ProgressLoader({
   const [visible, setVisible] = useState(true);
   const startAtRef = useRef<number>(Date.now());
   const abortersRef = useRef<AbortController[]>([]);
+  const [isFading, setIsFading] = useState(false);
 
   // เตรียมรายการไฟล์ (กรองซ้ำ)
   const assetList = useMemo(() => {
@@ -154,7 +157,10 @@ export default function ProgressLoader({
         setProgress(100);
         const spent = Date.now() - startAtRef.current;
         const wait = Math.max(0, minShowMs - spent) + 200; // +200ms เพื่อให้เห็น "เต็ม"
-        setTimeout(() => setVisible(false), wait);
+        setTimeout(() => {
+          setIsFading(true);
+          setTimeout(() => setVisible(false), FADE_MS);
+        });
       }
     };
 
@@ -173,10 +179,11 @@ export default function ProgressLoader({
     <div
       aria-live="polite"
       role="status"
-      className={`${backdropClass} fixed inset-0 z-[9999] flex items-center justify-center`}
+      className={`${backdropClass} fixed inset-0 z-[9999] flex items-center justify-center
+                    transition-opacity duration-[${FADE_MS}ms] ${isFading ? "opacity-0" : "opacity-100"}`}
     >
       <div className="w-[min(88vw,520px)] space-y-5 text-center">
-        <div className="text-4xl sm:text-5xl font-semibold tracking-tight text-white tabular-nums">
+        <div className="text-lg sm:text-sm font-semibold tracking-tight text-white tabular-nums">
           {progress}%
         </div>
 
