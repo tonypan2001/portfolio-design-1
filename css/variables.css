@@ -3,15 +3,15 @@
    Because they reference other CSS variables, they automatically adapt to dark mode. */
 
 :root {
-    /* Background Variable Color */
-    --primary-background-color: #000;
-    --secondary-background-color: #111;
+    /* Backgrounds mapped to theme */
+    --primary-background-color: var(--background);
+    --secondary-background-color: var(--secondary);
 
-    /* Text Variable Color */
-    --primary-text-color: #000;
-    --secondary-text-color: #000;
+    /* Text colors mapped to theme */
+    --primary-text-color: var(--foreground);
+    --secondary-text-color: var(--muted-foreground);
 
-    /* Hover Variable Colors */
-    --primary-hover-color: #000;
-    --secondary-hover-color: #000;
+    /* Hover colors mapped to theme accents */
+    --primary-hover-color: var(--accent);
+    --secondary-hover-color: var(--secondary-foreground);
 }
