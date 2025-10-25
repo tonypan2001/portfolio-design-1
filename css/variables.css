@@ -1,0 +1,17 @@
+/* Theme-aligned semantic variables.
+   These alias existing theme tokens from app/globals.css (:root and .dark).
+   Because they reference other CSS variables, they automatically adapt to dark mode. */
+
+:root {
+    /* Background Variable Color */
+    --primary-background-color: #000;
+    --secondary-background-color: #111;
+
+    /* Text Variable Color */
+    --primary-text-color: #000;
+    --secondary-text-color: #000;
+
+    /* Hover Variable Colors */
+    --primary-hover-color: #000;
+    --secondary-hover-color: #000;
+}
