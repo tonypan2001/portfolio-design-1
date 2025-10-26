@@ -59,36 +59,38 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Active section via IntersectionObserver (no layout reads in scroll handler)
+  // Stable active section detection (no jitter):
+  // pick the last section whose top is above the navbar offset.
   useEffect(() => {
     const navHeight = 80;
     const ids = navigation.menuItems.map((item) => item.href.substring(1));
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el));
 
-    if (elements.length === 0) return;
+    const onScrollStable = () => {
+      if (rafTick.current) return;
+      rafTick.current = true;
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort(
-            (a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0),
-          );
-        if (visible[0]?.target?.id) {
-          setActiveSection(visible[0].target.id);
+        let current = ids[0] || "home";
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          if (!el) continue;
+          const top = el.getBoundingClientRect().top;
+          if (top - navHeight <= 1) {
+            current = id;
+          } else {
+            break;
+          }
         }
-      },
-      {
-        root: null,
-        rootMargin: `-${navHeight + 10}px 0px -55% 0px`,
-        threshold: [0, 0.15, 0.25, 0.5, 0.75, 1],
-      },
-    );
+        setActiveSection((prev) => (prev === current ? prev : current));
+        rafTick.current = false;
+      });
+    };
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    window.addEventListener("scroll", onScrollStable, { passive: true });
+    // Initialize on mount
+    onScrollStable();
+    return () => window.removeEventListener("scroll", onScrollStable);
   }, []);
 
   const handleNavClick = (href: string) => {
