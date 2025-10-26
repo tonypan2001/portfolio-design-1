@@ -36,6 +36,14 @@ export function Navigation() {
     },
   });
 
+  // Keep highlight in sync with the active section (click/scroll)
+  useEffect(() => {
+    const el = document.querySelector(
+      `[data-href="#${activeSection}"]`,
+    ) as HTMLElement | null;
+    if (el) moveTo(el);
+  }, [activeSection, moveTo]);
+
   // Throttled scroll handler just for navbar style
   useEffect(() => {
     const onScroll = () => {
@@ -131,13 +139,13 @@ export function Navigation() {
               className={cn(
                 "pointer-events-none absolute",
                 "rounded-xl bg-accent ring-1 ring-accent/30",
-                "transition-[transform,width,height,opacity] duration-300 ease-out",
+                "transition-[transform,width,height,opacity] duration-150 ease-out",
                 hoverRect.visible ? "opacity-100" : "opacity-0",
               )}
               style={{
                 transform: `translateX(${hoverRect.x}px)`,
                 width: `${hoverRect.w}px`,
-                height: `${Math.max(hoverRect.h - 8, 28)}px`,
+                height: `${Math.max(hoverRect.h - 20, 40)}px`,
                 zIndex: 0,
               }}
             />
@@ -149,9 +157,12 @@ export function Navigation() {
                   key={item.href}
                   data-href={item.href} // ⬅️ ใช้จับ active element
                   href={item.href}
-                  // variant="ghost"
                   onMouseEnter={(e) => moveTo(e.currentTarget)}
-                  onClick={() => handleNavClick(item.href)}
+                  onClick={(e) => {
+                    // Move highlight immediately on click, then smooth scroll
+                    moveTo(e.currentTarget);
+                    handleNavClick(item.href);
+                  }}
                   className={cn(
                     "relative text-sm font-medium transition-colors cursor-pointer px-3 py-2",
                     activeSection === item.href.substring(1)
@@ -160,9 +171,6 @@ export function Navigation() {
                   )}
                 >
                   {item.label}
-                  {activeSection === item.href.substring(1) && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-foreground rounded-full" />
-                  )}
                 </Link>
               ))}
             </div>
