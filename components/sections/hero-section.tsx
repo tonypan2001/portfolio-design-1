@@ -14,7 +14,7 @@ import {
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { hero, heroCard } from "@/constants/contents";
-import ParticleNetwork from "./canvas/particle-network";
+import ParticleNetwork from "../canvas/particle-network";
 
 interface HeroSectionProps {
   cardPosition?: "left" | "middle" | "right";

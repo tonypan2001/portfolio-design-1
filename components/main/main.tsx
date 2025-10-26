@@ -1,0 +1,18 @@
+"use client";
+import { Navigation } from "../layouts/navigation";
+import { AboutSection } from "../sections/about-section";
+import { ContactSection } from "../sections/contact-section";
+import { HeroSection } from "../sections/hero-section";
+import { SkillsSection } from "../sections/skills-section";
+
+export default function MainPage() {
+  return (
+    <main className="min-h-screen">
+      <Navigation />
+      <HeroSection cardPosition="left" />
+      <AboutSection />
+      <SkillsSection />
+      <ContactSection />
+    </main>
+  );
+}
