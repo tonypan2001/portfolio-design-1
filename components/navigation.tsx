@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { smoothScrollToElement } from "@/lib/smooth-scroll";
 import { Button } from "@/components/ui/button";
+import { useHoverHighlight } from "@/hooks/useHoverHighlight";
 import {
   Select,
   SelectContent,
@@ -12,11 +13,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { navigation } from "@/constants/contents";
+import Link from "next/link";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const rafTick = useRef(false);
+  const {
+    menuRef,
+    rect: hoverRect,
+    moveTo,
+    hide,
+  } = useHoverHighlight({
+    stickToActive: true,
+    autoHideOnLeave: true,
+    transitionMs: 300,
+    getActiveEl: () => {
+      // หา Button ที่ active จาก label/href ของคุณ
+      // สมมติคุณแปะ data-href ให้ปุ่มแต่ละอันด้านล่าง
+      const selector = `[data-href="#${activeSection}"]`;
+      return (menuRef.current?.querySelector(selector) as HTMLElement) || null;
+    },
+  });
 
   // Throttled scroll handler just for navbar style
   useEffect(() => {
@@ -103,25 +121,51 @@ export function Navigation() {
           </div>
 
           {/* Desktop Menu - Center */}
-          <div className="hidden md:flex items-center gap-1">
-            {navigation.menuItems.map((item) => (
-              <Button
-                key={item.href}
-                variant="ghost"
-                onClick={() => handleNavClick(item.href)}
-                className={cn(
-                  "relative text-sm font-medium transition-colors cursor-pointer",
-                  activeSection === item.href.substring(1)
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-              >
-                {item.label}
-                {activeSection === item.href.substring(1) && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-foreground rounded-full" />
-                )}
-              </Button>
-            ))}
+          <div
+            ref={menuRef}
+            className="relative hidden md:flex items-center gap-1"
+          >
+            {/* Highlight movable pill */}
+            <span
+              aria-hidden
+              className={cn(
+                "pointer-events-none absolute",
+                "rounded-xl bg-accent ring-1 ring-accent/30",
+                "transition-[transform,width,height,opacity] duration-300 ease-out",
+                hoverRect.visible ? "opacity-100" : "opacity-0",
+              )}
+              style={{
+                transform: `translateX(${hoverRect.x}px)`,
+                width: `${hoverRect.w}px`,
+                height: `${Math.max(hoverRect.h - 8, 28)}px`,
+                zIndex: 0,
+              }}
+            />
+
+            {/* เมนูจริง */}
+            <div className="relative z-10 flex items-center gap-1">
+              {navigation.menuItems.map((item) => (
+                <Link
+                  key={item.href}
+                  data-href={item.href} // ⬅️ ใช้จับ active element
+                  href={item.href}
+                  // variant="ghost"
+                  onMouseEnter={(e) => moveTo(e.currentTarget)}
+                  onClick={() => handleNavClick(item.href)}
+                  className={cn(
+                    "relative text-sm font-medium transition-colors cursor-pointer px-3 py-2",
+                    activeSection === item.href.substring(1)
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {item.label}
+                  {activeSection === item.href.substring(1) && (
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-foreground rounded-full" />
+                  )}
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* Language Selector */}
