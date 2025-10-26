@@ -44,20 +44,7 @@ export function Navigation() {
     if (el) moveTo(el);
   }, [activeSection, moveTo]);
 
-  // Throttled scroll handler just for navbar style
-  useEffect(() => {
-    const onScroll = () => {
-      if (rafTick.current) return;
-      rafTick.current = true;
-      requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 50);
-        rafTick.current = false;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // removed separate scroll handler to avoid race conditions with highlight updates
 
   // Stable active section detection (no jitter):
   // pick the last section whose top is above the navbar offset.
@@ -140,7 +127,7 @@ export function Navigation() {
               aria-hidden
               className={cn(
                 "pointer-events-none absolute",
-                "rounded-xl bg-accent ring-1 ring-accent/30",
+                "rounded-lg bg-accent ring-1 ring-accent/30",
                 "transition-[transform,width,height,opacity] duration-150 ease-out",
                 hoverRect.visible ? "opacity-100" : "opacity-0",
               )}
@@ -161,12 +148,16 @@ export function Navigation() {
                   href={item.href}
                   onMouseEnter={(e) => moveTo(e.currentTarget)}
                   onClick={(e) => {
-                    // Move highlight immediately on click, then smooth scroll
+                    // Prevent default hash navigation; we control scroll
+                    e.preventDefault();
+                    // Set active immediately and move highlight
+                    setActiveSection(item.href.substring(1));
                     moveTo(e.currentTarget);
+                    // Smooth scroll to section
                     handleNavClick(item.href);
                   }}
                   className={cn(
-                    "relative text-sm font-medium transition-colors cursor-pointer px-3 py-2",
+                    "relative text-xl font-light transition-colors cursor-pointer px-4 py-3",
                     activeSection === item.href.substring(1)
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
