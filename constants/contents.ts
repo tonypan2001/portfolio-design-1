@@ -26,4 +26,47 @@ export const heroCard = {
   ],
 };
 
-export const about = {};
+export const section = {
+  aboutSection: {
+    title: "About",
+    content:
+      "I'm a frontend developer passionate about building clean, interactive, and performance-driven websites. I focus on creating intuitive UIs using modern technologies like Next.js, Tailwind CSS. Currently, I'm expanding my skills in 3D design and other frontend stacks.",
+  },
+  skillsSection: {
+    title: "Skills & Tools",
+    content: [
+      {
+        label: "Frontend",
+        items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "SCSS"],
+      },
+      {
+        label: "Design",
+        items: ["Figma", "Blender", "Canva"],
+      },
+    ],
+  },
+  contactSection: {
+    title: "Let's Connect",
+    content:
+      "Have an idea, a project, or just want to say hi? Feel free to reach out — I'm always open to collaborations and new opportunities.",
+    email: "prompan.ue@gmail.com",
+    platform: [
+      {
+        label: "GitHub",
+        href: "",
+      },
+      {
+        label: "X (Twitter)",
+        href: "",
+      },
+      {
+        label: "LinkedIn",
+        href: "",
+      },
+    ],
+  },
+  footerSection: {
+    title: "PanStudio",
+    content: "© 2025 PanStudio — Designed & Built by Prompan Uechanwech",
+  },
+};
