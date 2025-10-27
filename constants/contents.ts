@@ -2,8 +2,8 @@ export const navigation = {
   logo: "PanStudio",
   menuItems: [
     { label: "Home", href: "#home" },
-    { label: "Features", href: "#features" },
     { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
     { label: "Contact", href: "#contact" },
   ],
 };

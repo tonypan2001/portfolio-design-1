@@ -18,17 +18,32 @@ export function AboutSection() {
           {section.aboutSection.content}
         </p>
         <ul className="mt-6 flex flex-wrap justify-center gap-2">
-          {["Next.js", "TypeScript", "Tailwind", "Supabase", "Blender"].map(
-            (t) => (
-              <li
-                key={t}
-                className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-sm ring-1 ring-white/15"
-              >
-                {t}
-              </li>
-            ),
-          )}
+          {["Next.js", "TypeScript", "Tailwind CSS", "Blender"].map((t) => (
+            <li
+              key={t}
+              className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-sm ring-1 ring-white/15"
+            >
+              {t}
+            </li>
+          ))}
         </ul>
+        <div className="mt-8 grid grid-cols-3 gap-6 max-w-xl mx-auto text-center">
+          {[
+            { n: "1+", label: "Year coding" },
+            { n: "5", label: "Core tools" },
+            { n: "2025", label: "Focus: Frontend" },
+          ].map((x) => (
+            <div key={x.label}>
+              <div className="text-3xl font-semibold tabular-nums text-white">
+                {x.n}
+              </div>
+              <div className="text-white/70 text-sm">{x.label}</div>
+            </div>
+          ))}
+        </div>
+        <blockquote className="mt-8 text-center text-white/80 italic">
+          “I craft clean, interactive UIs with a focus on performance and feel.”
+        </blockquote>
       </div>
     </section>
   );
