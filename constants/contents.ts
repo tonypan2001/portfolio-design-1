@@ -31,6 +31,14 @@ export const section = {
     title: "About",
     content:
       "I'm a frontend developer passionate about building clean, interactive, and performance-driven websites. I focus on creating intuitive UIs using modern technologies like Next.js, Tailwind CSS. Currently, I'm expanding my skills in 3D design and other frontend stacks.",
+    stats: [
+      { value: "4+", label: "Year coding" },
+      { value: "5", label: "Core tools" },
+      { value: "100", label: "Completed Projects" },
+    ],
+    tools: ["Next.js", "TypeScript", "Tailwind CSS", "Blender"],
+    quote:
+      "I craft clean, interactive UIs with a focus on performance and feel.",
   },
   skillsSection: {
     title: "Skills & Tools",
