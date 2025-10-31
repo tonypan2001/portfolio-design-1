@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { criticalAssetPaths } from "@/constants/paths";
 import ProgressLoader from "@/components/layouts/progress-loader";
 import FirstVisitEffects from "@/components/layouts/first-visit-effects";
+import SmoothScroll from "@/components/layouts/smooth-scroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Make mouse-wheel scrolling buttery-smooth on desktop */}
+        <SmoothScroll />
         {/* Run first-visit fade-in effects (no-op after first load) */}
         <FirstVisitEffects />
         <ProgressLoader
