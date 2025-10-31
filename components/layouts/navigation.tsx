@@ -138,19 +138,18 @@ export function Navigation() {
             ref={menuRef}
             className="relative hidden md:flex items-center gap-1 justify-center justify-self-center"
           >
-            {/* Highlight movable pill */}
+            {/* Sliding underline (primary color) */}
             <span
               aria-hidden
               className={cn(
-                "pointer-events-none absolute left-0 top-11 -translate-y-1/2",
-                "rounded-lg bg-accent ring-1 ring-accent/30",
-                "transition-[transform,width,height,opacity] duration-150 ease-out",
+                "pointer-events-none absolute left-0 bottom-0",
+                "h-1.5 bg-secondary rounded-full",
+                "transition-[transform,width,opacity] duration-200 ease-out",
                 hoverRect.visible ? "opacity-100" : "opacity-0",
               )}
               style={{
-                transform: `translate(${hoverRect.x}px, -50%)`,
+                transform: `translateX(${hoverRect.x}px)`,
                 width: `${hoverRect.w}px`,
-                height: `${hoverRect.h}px`,
                 zIndex: 0,
               }}
             />
@@ -173,7 +172,7 @@ export function Navigation() {
                     handleNavClick(item.href);
                   }}
                   className={cn(
-                    `relative text-sm transition-colors cursor-pointer px-4 py-3`,
+                    `relative text-sm transition-colors cursor-pointer px-4 py-3 pb-4`,
                     activeSection === item.href.substring(1)
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
