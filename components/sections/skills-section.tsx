@@ -1,10 +1,24 @@
 import { section } from "@/constants/contents";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 export function SkillsSection() {
   const techs = section.skillsSection.techs ?? [];
-  const TechIcon = ({ iconUrl, icon, alt }: { iconUrl?: string; icon?: string; alt: string }) => {
+  const TechIcon = ({
+    iconUrl,
+    icon,
+    alt,
+  }: {
+    iconUrl?: string;
+    icon?: string;
+    alt: string;
+  }) => {
     const src = iconUrl || icon;
     if (!src) return null;
     return (
@@ -28,6 +42,17 @@ export function SkillsSection() {
     >
       {/* Decorative bottom wave */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        {/* Background image at low opacity */}
+        <img
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2344"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-20 select-none"
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+        />
+        {/* Top fade to blend into previous section */}
+        <div className="absolute inset-x-0 top-0 h-32 md:h-40 bg-linear-to-b from-background to-transparent" />
         <img
           src="/wave-bottom.svg"
           alt=""
@@ -50,14 +75,19 @@ export function SkillsSection() {
               <CardHeader className="gap-2">
                 <CardTitle className="text-xl md:text-2xl flex items-center justify-between">
                   <span className="flex items-center gap-2">
-                    <TechIcon iconUrl={(t as any).iconUrl} icon={(t as any).icon} alt={`${t.name} logo`} />
+                    <TechIcon
+                      iconUrl={(t as any).iconUrl}
+                      icon={(t as any).icon}
+                      alt={`${t.name} logo`}
+                    />
                     {t.name}
                   </span>
                   <span
                     className={cn(
                       "text-xs md:text-sm px-2 py-1 rounded-full ring-1 ring-border",
                       t.level === "Advanced" && "bg-primary/10 text-primary",
-                      t.level === "Intermediate" && "bg-secondary/10 text-secondary",
+                      t.level === "Intermediate" &&
+                        "bg-secondary/10 text-secondary",
                     )}
                   >
                     {t.level}
