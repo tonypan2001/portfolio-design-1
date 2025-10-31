@@ -171,6 +171,41 @@ export const section = {
       },
     ],
   },
+  feedbackSection: {
+    title: "Feedback from customers",
+    testimonials: [
+      {
+        name: "Ava Thompson",
+        role: "Product Manager",
+        company: "Northstar Labs",
+        rating: 5,
+        avatar:
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop",
+        quote:
+          "They delivered a clean, responsive site ahead of schedule. The attention to detail and performance was outstanding.",
+      },
+      {
+        name: "Daniel Chen",
+        role: "Founder",
+        company: "Atlas Studio",
+        rating: 5,
+        avatar:
+          "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=256&auto=format&fit=crop",
+        quote:
+          "Seamless collaboration and great UX sense. Our conversions went up within the first week of launch.",
+      },
+      {
+        name: "Maria Lopez",
+        role: "Marketing Lead",
+        company: "Crescent Co.",
+        rating: 4,
+        avatar:
+          "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=256&auto=format&fit=crop",
+        quote:
+          "Fast delivery, clear communication, and pixel-perfect responsive design. Highly recommended!",
+      },
+    ],
+  },
   contactSection: {
     title: "Let's Connect",
     content:
