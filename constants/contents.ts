@@ -2,9 +2,7 @@ export const navigation = {
   logo: "PanStudio",
   menuItems: [
     { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
     { label: "What we do", href: "#what-we-do" },
-    { label: "Skills", href: "#skills" },
     { label: "Feedback", href: "#feedback" },
     { label: "Contact", href: "#contact" },
   ],
