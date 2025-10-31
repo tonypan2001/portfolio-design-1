@@ -11,7 +11,17 @@ export function WhatWeDoSection() {
       data-fv
       className="scroll-section relative min-h-screen flex items-center justify-center bg-background mb-8 md:mb-0"
     >
-      <div className="container px-4">
+      {/* Decorative wave at the top (full-width image) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        <img
+          src="/wave.svg"
+          alt=""
+          className="absolute inset-x-0 top-0 w-full h-40 md:h-48 object-cover select-none"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="container relative z-10 px-4">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
           {section.whatWeDoSection.title}
         </h2>
