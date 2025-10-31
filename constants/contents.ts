@@ -40,6 +40,26 @@ export const section = {
     quote:
       "I craft clean, interactive UIs with a focus on performance and feel.",
   },
+  whatWeDoSection: {
+    title: "What we do",
+    items: [
+      {
+        title: "Create Website",
+        detail:
+          "Design and build modern, fast websites tailored to your brand using Next.js, TypeScript, and performance best practices.",
+      },
+      {
+        title: "Responsive",
+        detail:
+          "Pixel‑perfect layouts that adapt to any device and screen size, delivering a consistent experience on mobile, tablet, and desktop.",
+      },
+      {
+        title: "Deploy & Hosting",
+        detail:
+          "Production‑ready deployments with CI/CD and optimized hosting on Vercel, Netlify, or your preferred cloud provider.",
+      },
+    ],
+  },
   skillsSection: {
     title: "Skills & Tools",
     content: [
