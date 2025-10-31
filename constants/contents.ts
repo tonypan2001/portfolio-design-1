@@ -9,10 +9,10 @@ export const navigation = {
 };
 
 export const hero = {
-  heroText: "Welcome to",
+  heroText: "Where Design Meets Motion",
   heroTextWithGradient: "PanStudio",
   heroTextDetail:
-    "Experience the next generation of web interfaces with stunning elements and modern design",
+    "We craft crisp, accessible interfaces with subtle 3D and purposeful motion—tuned for speed, clarity, and feel.",
 };
 
 export const heroCard = {
