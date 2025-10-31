@@ -185,7 +185,7 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Language Selector (no dropdown to avoid layout shifts) */}
+          {/* Language Selector (desktop only, no dropdown to avoid layout shifts) */}
           <div className="hidden md:flex items-center gap-1 justify-self-end rounded-full border border-border/50 p-0.5">
             <button
               type="button"
@@ -229,7 +229,10 @@ export function Navigation() {
               <span className="hidden lg:inline">ไทย</span>
               <span className="lg:hidden">TH</span>
             </button>
-          {/* Mobile Menu Button */}
+          </div>
+
+          {/* Mobile Menu Button (mobile only) */}
+          <div className="md:hidden justify-self-end flex items-center col-start-3 row-start-1">
             <Button
               variant="ghost"
               size="lg"
@@ -237,7 +240,7 @@ export function Navigation() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               className={cn(
-                "relative md:hidden w-12 h-12",
+                "relative w-12 h-12",
                 mobileOpen && "z-70 text-white",
               )}
               onClick={() => setMobileOpen((v) => !v)}
