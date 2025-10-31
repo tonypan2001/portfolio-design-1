@@ -28,7 +28,7 @@ export function WhatWeDoSection() {
         />
         <div className="absolute inset-x-0 top-0 h-40 md:h-48" />
       </div>
-      <div className="container relative z-10 px-4 pt-16 md:pt-24">
+      <div className="container relative z-10 px-4 pt-16 md:pt-24 mt-24">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
           {section.whatWeDoSection.title}
         </h2>
