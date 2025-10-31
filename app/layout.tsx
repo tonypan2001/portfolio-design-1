@@ -16,8 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio Landing Page Design 1",
-  description: "PanStudio Portfolio Landing Page Design 1",
+  title: "PanStudio",
+  description: "PanStudio — Modern, motion-smart web interfaces.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
