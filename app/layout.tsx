@@ -38,7 +38,7 @@ export default function RootLayout({
           minShowMs={900} // กันกระพริบ
           waitForEvents={["r3f-ready"]}
           barColorClass="bg-white"
-          backdropClass="bg-neutral-950"
+          backdropClass="bg-primary"
           text="Loading assets…"
         />
         {children}

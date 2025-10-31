@@ -10,7 +10,7 @@ export default function ProgressLoader({
   includeFonts = true,
   minShowMs = 800,
   barColorClass = "bg-white",
-  backdropClass = "bg-neutral-950",
+  backdropClass = "bg-primary",
   text = "Initializing PanStudio…",
   waitForEvents = [],
   waitTimeoutMs = 20000,
@@ -213,7 +213,7 @@ export default function ProgressLoader({
     <div
       aria-live="polite"
       role="status"
-      className={`${backdropClass} fixed inset-0 z-[9999] flex items-center justify-center`}
+      className={`${backdropClass} fixed inset-0 z-9999 flex items-center justify-center`}
       style={{
         transition: `transform ${EXIT_MS}ms ease-out, opacity ${EXIT_MS}ms ease-out`,
         transform: isExiting ? "translateY(-100%)" : "translateY(0)",
