@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LoaderProps } from "@/types/loader";
 
-const FADE_MS = 400; // ปรับได้ 300–600ms ตามชอบ
+const EXIT_MS = 700; // slide-up + fade duration
 
 export default function ProgressLoader({
   assets,
@@ -19,7 +19,7 @@ export default function ProgressLoader({
   const [visible, setVisible] = useState(true);
   const startAtRef = useRef<number>(Date.now());
   const abortersRef = useRef<AbortController[]>([]);
-  const [isFading, setIsFading] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
 
   // เตรียมรายการไฟล์ (กรองซ้ำ)
   const assetList = useMemo(() => {
@@ -192,9 +192,9 @@ export default function ProgressLoader({
         const spent = Date.now() - startAtRef.current;
         const wait = Math.max(0, minShowMs - spent) + 200; // +200ms เพื่อให้เห็น "เต็ม"
         setTimeout(() => {
-          setIsFading(true);
-          setTimeout(() => setVisible(false), FADE_MS);
-        });
+          setIsExiting(true);
+          setTimeout(() => setVisible(false), EXIT_MS);
+        }, wait);
       }
     };
 
@@ -213,8 +213,13 @@ export default function ProgressLoader({
     <div
       aria-live="polite"
       role="status"
-      className={`${backdropClass} fixed inset-0 z-[9999] flex items-center justify-center
-                    transition-opacity duration-[${FADE_MS}ms] ${isFading ? "opacity-0" : "opacity-100"}`}
+      className={`${backdropClass} fixed inset-0 z-[9999] flex items-center justify-center`}
+      style={{
+        transition: `transform ${EXIT_MS}ms ease-out, opacity ${EXIT_MS}ms ease-out`,
+        transform: isExiting ? "translateY(-100%)" : "translateY(0)",
+        opacity: isExiting ? 0 : 1,
+        willChange: "transform, opacity",
+      }}
     >
       <div className="w-[min(88vw,520px)] space-y-5 text-center">
         <div className="text-lg sm:text-sm font-semibold tracking-tight text-white tabular-nums">
@@ -223,7 +228,7 @@ export default function ProgressLoader({
 
         <div className="h-3 w-full rounded-full bg-white/10 overflow-hidden ring-1 ring-white/10">
           <div
-            className={`h-full ${barColorClass} transition-[width] duration-120`}
+            className={`h-full ${barColorClass} transition-[width] duration-200`}
             style={{ width: `${progress}%` }}
           />
         </div>
