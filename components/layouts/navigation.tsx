@@ -310,6 +310,60 @@ export function Navigation({ nav }: { nav?: typeof navigation }) {
                   </ul>
                 </nav>
               </div>
+
+              {/* Mobile language selector */}
+              <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+                <div className="inline-flex items-center gap-1 rounded-full border border-white/30 bg-white/10 backdrop-blur px-1 py-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (currentLang !== "en") router.push("/");
+                      setLang("en");
+                      setMobileOpen(false);
+                    }}
+                    className={cn(
+                      "h-9 px-3 rounded-full inline-flex items-center gap-2 text-sm transition-colors",
+                      lang === "en"
+                        ? "bg-white/30 text-white"
+                        : "text-white/80 hover:bg-white/20",
+                    )}
+                  >
+                    <img
+                      src="https://flagcdn.com/w40/us.png"
+                      alt="English"
+                      className="w-4 h-4 rounded-full object-cover"
+                      width={16}
+                      height={16}
+                      loading="lazy"
+                    />
+                    EN
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (currentLang !== "th") router.push("/th");
+                      setLang("th");
+                      setMobileOpen(false);
+                    }}
+                    className={cn(
+                      "h-9 px-3 rounded-full inline-flex items-center gap-2 text-sm transition-colors",
+                      lang === "th"
+                        ? "bg-white/30 text-white"
+                        : "text-white/80 hover:bg-white/20",
+                    )}
+                  >
+                    <img
+                      src="https://flagcdn.com/w40/th.png"
+                      alt="ไทย"
+                      className="w-4 h-4 rounded-full object-cover"
+                      width={16}
+                      height={16}
+                      loading="lazy"
+                    />
+                    TH
+                  </button>
+                </div>
+              </div>
             </div>,
             document.body,
           )}
