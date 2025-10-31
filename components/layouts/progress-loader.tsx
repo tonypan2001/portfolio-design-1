@@ -21,6 +21,15 @@ export default function ProgressLoader({
   const abortersRef = useRef<AbortController[]>([]);
   const [isExiting, setIsExiting] = useState(false);
 
+  // Mark the document as loading while the overlay is mounted
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.add("app-loading");
+    return () => {
+      root.classList.remove("app-loading");
+    };
+  }, []);
+
   // เตรียมรายการไฟล์ (กรองซ้ำ)
   const assetList = useMemo(() => {
     const seen = new Set<string>();
@@ -193,7 +202,20 @@ export default function ProgressLoader({
         const wait = Math.max(0, minShowMs - spent) + 200; // +200ms เพื่อให้เห็น "เต็ม"
         setTimeout(() => {
           setIsExiting(true);
-          setTimeout(() => setVisible(false), EXIT_MS);
+          try {
+            // Notify any listeners (e.g., first-visit effects) that loader is exiting
+            window.dispatchEvent(new Event("app-loader-will-hide"));
+          } catch {}
+          setTimeout(() => {
+            try {
+              window.dispatchEvent(new Event("app-loader-done"));
+            } catch {}
+            // Allow content to animate only after loader fully gone
+            try {
+              document.documentElement.classList.remove("app-loading");
+            } catch {}
+            setVisible(false);
+          }, EXIT_MS);
         }, wait);
       }
     };
@@ -211,9 +233,10 @@ export default function ProgressLoader({
 
   return (
     <div
+      id="app-loader"
       aria-live="polite"
       role="status"
-      className={`${backdropClass} fixed inset-0 z-9999 flex items-center justify-center`}
+      className={`${backdropClass} fixed inset-0 z-[9999] flex items-center justify-center`}
       style={{
         transition: `transform ${EXIT_MS}ms ease-out, opacity ${EXIT_MS}ms ease-out`,
         transform: isExiting ? "translateY(-100%)" : "translateY(0)",

@@ -146,21 +146,48 @@ export default function FirstVisitEffects() {
       };
 
       let outerCleanup: (() => void) | undefined;
-      const run = () => {
+
+      const begin = () => {
+        if (outerCleanup) return; // already started
         outerCleanup = startWhenReady() || undefined;
       };
 
-      if (document.readyState === "complete") {
-        run();
-      } else {
-        const onLoad = () => {
-          run();
-          window.removeEventListener("load", onLoad);
-        };
-        window.addEventListener("load", onLoad, { once: true });
-      }
+      // Prefer to wait for the app loader to finish hiding
+      let started = false;
+      const onLoaderDone = () => {
+        started = true;
+        begin();
+      };
+      window.addEventListener("app-loader-done", onLoaderDone, { once: true });
+
+      // Fallback: if loader event never arrives, start after load + small delay
+      const loaderPresent = () => !!document.getElementById("app-loader");
+      const onLoad = () => {
+        if (started) return;
+        if (!loaderPresent()) {
+          begin();
+          return;
+        }
+        // Wait for the loader element to be removed
+        const mo = new MutationObserver(() => {
+          if (!loaderPresent()) {
+            mo.disconnect();
+            begin();
+          }
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
+        // Long-stop fallback (in case element never disappears)
+        const t = window.setTimeout(() => {
+          mo.disconnect();
+          if (!started) begin();
+        }, 15000);
+      };
+      if (document.readyState === "complete") onLoad();
+      else window.addEventListener("load", onLoad, { once: true });
 
       return () => {
+        window.removeEventListener("app-loader-done", onLoaderDone);
+        window.removeEventListener("load", onLoad as any);
         if (outerCleanup) outerCleanup();
       };
     } catch {

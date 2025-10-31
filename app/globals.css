@@ -183,7 +183,7 @@
 }
 
 /* Scroll-triggered fade-ins per section */
-:root { --fv-duration: 2000ms; --fv-distance: 20px; }
+:root { --fv-duration: 1800ms; --fv-distance: 20px; }
 
 /* Set common transition on all items within fv-enabled sections */
 body.fv-active section[data-fv] .fv-item {
@@ -213,3 +213,9 @@ body.fv-active section[data-fv].fv-show p.fv-item,
 body.fv-active section[data-fv].fv-show li.fv-item { transition-delay: 440ms; }
 body.fv-active section[data-fv].fv-show [data-slot^="card"].fv-item { transition-delay: 660ms; }
 body.fv-active section[data-fv].fv-show [data-slot="button"].fv-item { transition-delay: 880ms; }
+
+/* While app loader is active, keep animatable items hidden with no transitions */
+html.app-loading section[data-fv] .fv-item {
+  opacity: 0 !important;
+  transition: none !important;
+}
