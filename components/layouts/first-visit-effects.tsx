@@ -19,10 +19,17 @@ export default function FirstVisitEffects() {
       const getSections = () =>
         Array.from(document.querySelectorAll<HTMLElement>("section[data-fv]"));
 
-      const isInViewport = (el: Element) => {
+      const visibleRatio = (el: Element) => {
         const r = el.getBoundingClientRect();
-        return r.top < window.innerHeight && r.bottom > 0;
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const top = Math.max(0, Math.min(vh, r.top));
+        const bottom = Math.max(0, Math.min(vh, r.bottom));
+        const visible = Math.max(0, bottom - top);
+        const height = Math.max(1, r.height || (r.bottom - r.top));
+        return Math.min(1, visible / height);
       };
+
+      const isInViewport = (el: Element, threshold = 0.2) => visibleRatio(el) >= threshold;
 
       const init = () => {
         const sections = getSections();
@@ -34,10 +41,10 @@ export default function FirstVisitEffects() {
         // Set initial hidden state
         for (const s of sections) s.classList.add("fv-await");
 
-        // Animate sections currently in view on next frame
+        // Animate sections currently in view (strict threshold) on next frame
         requestAnimationFrame(() => {
           for (const s of sections) {
-            if (isInViewport(s)) {
+            if (isInViewport(s, 0.6)) {
               s.classList.add("fv-show");
               s.classList.remove("fv-await");
             }
@@ -77,7 +84,7 @@ export default function FirstVisitEffects() {
           document
             .querySelectorAll<HTMLElement>('section[data-fv].fv-await')
             .forEach((s) => {
-              if (isInViewport(s)) {
+              if (isInViewport(s, 0.22)) {
                 s.classList.add("fv-show");
                 s.classList.remove("fv-await");
                 io.unobserve(s);
