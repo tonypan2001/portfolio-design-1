@@ -42,7 +42,10 @@ export function SkillsSection() {
         {/* Grid of tech cards */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {techs.map((t) => (
-            <Card key={t.name} className="backdrop-blur-sm bg-card/80 border-border/60">
+            <Card
+              key={t.name}
+              className="backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
+            >
               <CardHeader className="gap-2">
                 <CardTitle className="text-xl md:text-2xl flex items-center justify-between">
                   <span className="flex items-center gap-2">
