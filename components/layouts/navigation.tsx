@@ -22,6 +22,7 @@ export function Navigation() {
   const [activeSection, setActiveSection] = useState("home");
   const rafTick = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [lang, setLang] = useState<"en" | "th">("en");
   const {
     menuRef,
     rect: hoverRect,
@@ -124,7 +125,7 @@ export function Navigation() {
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center min-h-16 md:min-h-20">
           {/* Logo */}
           <div className="shrink-0">
             <a
@@ -142,21 +143,21 @@ export function Navigation() {
           {/* Desktop Menu - Center */}
           <div
             ref={menuRef}
-            className="relative hidden md:flex items-center gap-1"
+            className="relative hidden md:flex items-center gap-1 justify-center justify-self-center"
           >
             {/* Highlight movable pill */}
             <span
               aria-hidden
               className={cn(
-                "pointer-events-none absolute",
+                "pointer-events-none absolute left-0 top-11 -translate-y-1/2",
                 "rounded-lg bg-accent ring-1 ring-accent/30",
                 "transition-[transform,width,height,opacity] duration-150 ease-out",
                 hoverRect.visible ? "opacity-100" : "opacity-0",
               )}
               style={{
-                transform: `translateX(${hoverRect.x}px)`,
+                transform: `translate(${hoverRect.x}px, -50%)`,
                 width: `${hoverRect.w}px`,
-                height: `${Math.max(hoverRect.h - 20, 40)}px`,
+                height: `${hoverRect.h}px`,
                 zIndex: 0,
               }}
             />
@@ -192,19 +193,50 @@ export function Navigation() {
           </div>
 
           {/* Language Selector */}
-          <div className="flex items-center gap-4">
-            <Select defaultValue="en">
-              <SelectTrigger className="w-[100px] md:w-[120px] border-border/50">
-                <SelectValue placeholder="Language" />
+          <div className="flex items-center gap-2 justify-self-end">
+            <Select value={lang} onValueChange={(v) => setLang(v as any)}>
+              <SelectTrigger size="sm" className="hidden md:flex w-[120px] px-2 py-1 text-sm border-border/50 justify-center">
+                <span className="inline-flex items-center gap-2">
+                  <img
+                    src={lang === "th" ? "https://flagcdn.com/w40/th.png" : "https://flagcdn.com/w40/us.png"}
+                    alt={lang === "th" ? "ไทย" : "English"}
+                    className="w-4 h-4 rounded-full object-cover"
+                    width={16}
+                    height={16}
+                    loading="lazy"
+                  />
+                  {lang === "th" ? "ไทย" : "English"}
+                </span>
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="es">Español</SelectItem>
-                <SelectItem value="fr">Français</SelectItem>
-                <SelectItem value="de">Deutsch</SelectItem>
+              <SelectContent align="end">
+                <SelectItem value="en">
+                  <span className="inline-flex items-center gap-2">
+                    <img
+                      src="https://flagcdn.com/w40/us.png"
+                      alt="English"
+                      className="w-4 h-4 rounded-full object-cover"
+                      width={16}
+                      height={16}
+                      loading="lazy"
+                    />
+                    English
+                  </span>
+                </SelectItem>
+                <SelectItem value="th">
+                  <span className="inline-flex items-center gap-2">
+                    <img
+                      src="https://flagcdn.com/w40/th.png"
+                      alt="ไทย"
+                      className="w-4 h-4 rounded-full object-cover"
+                      width={16}
+                      height={16}
+                      loading="lazy"
+                    />
+                    ไทย
+                  </span>
+                </SelectItem>
               </SelectContent>
             </Select>
-
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
