@@ -33,19 +33,19 @@ export function ContactSection() {
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
           {/* Email card */}
-          <Card className="md:col-span-2 backdrop-blur-sm bg-card/80 border-border/60">
+          <Card className="md:col-span-2 bg-white/10 backdrop-blur-xl border-white/20 text-white shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl">Get in touch</CardTitle>
-              <CardDescription>Prefer email? I’ll get back soon.</CardDescription>
+              <CardDescription className="text-white/70">Prefer email? I’ll get back soon.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <Button asChild className="w-full sm:w-auto">
+              <Button asChild className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 border-0">
                 <a href={emailHref}>
                   <Mail className="mr-2 h-4 w-4" />
                   {section.contactSection.email}
                 </a>
               </Button>
-              <span className="text-xs text-muted-foreground">or connect on</span>
+              <span className="text-xs text-white/60">or connect on</span>
               <div className="flex flex-wrap gap-2">
                 {platforms.map((p) => {
                   const Icon = iconFor(p.label);
@@ -54,8 +54,11 @@ export function ContactSection() {
                     <Button
                       key={p.label}
                       variant="outline"
+                      className={cn(
+                        "gap-2 border-white/30 text-white hover:bg-white/10 bg-transparent",
+                        isDisabled && "pointer-events-none opacity-50",
+                      )}
                       asChild={!isDisabled}
-                      className={cn("gap-2", isDisabled && "pointer-events-none opacity-50")}
                     >
                       {isDisabled ? (
                         <span className="inline-flex items-center">
@@ -76,13 +79,13 @@ export function ContactSection() {
           </Card>
 
           {/* Quick blurb card */}
-          <Card className="backdrop-blur-sm bg-card/80 border-border/60">
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20 text-white shadow-lg">
             <CardHeader>
               <CardTitle className="text-xl">Availability</CardTitle>
-              <CardDescription>Freelance & collaboration friendly</CardDescription>
+              <CardDescription className="text-white/70">Freelance & collaboration friendly</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/80">
                 Open to frontend projects, UI/UX polish, and interactive web
                 experiences. Let’s build something delightful.
               </p>

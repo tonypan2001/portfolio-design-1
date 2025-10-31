@@ -152,15 +152,15 @@ export const section = {
     platform: [
       {
         label: "GitHub",
-        href: "",
+        href: "http://localhost:3000/",
       },
       {
         label: "X (Twitter)",
-        href: "",
+        href: "http://localhost:3000/",
       },
       {
         label: "LinkedIn",
-        href: "",
+        href: "http://localhost:3000/",
       },
     ],
   },
