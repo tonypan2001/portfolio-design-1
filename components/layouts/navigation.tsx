@@ -15,6 +15,7 @@ import {
 import { navigation } from "@/constants/contents";
 import Link from "next/link";
 import { createPortal } from "react-dom";
+import { Menu, X } from "lucide-react";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -207,37 +208,17 @@ export function Navigation() {
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
-              size="icon"
+              size="lg"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               className={cn(
-                "relative md:hidden w-10 h-10",
-                mobileOpen && "z-[70] text-white",
+                "relative md:hidden w-12 h-12",
+                mobileOpen && "z-70 text-white",
               )}
               onClick={() => setMobileOpen((v) => !v)}
             >
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute left-1/2 top-1/2 -translate-x-1/2 block w-6 h-0.5 bg-current transition-transform duration-300",
-                  mobileOpen ? "translate-y-0 rotate-45" : "-translate-y-2 rotate-0",
-                )}
-              />
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute left-1/2 top-1/2 -translate-x-1/2 block w-6 h-0.5 bg-current transition-opacity duration-300",
-                  mobileOpen ? "opacity-0" : "opacity-100",
-                )}
-              />
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute left-1/2 top-1/2 -translate-x-1/2 block w-6 h-0.5 bg-current transition-transform duration-300",
-                  mobileOpen ? "translate-y-0 -rotate-45" : "translate-y-2 rotate-0",
-                )}
-              />
+              {mobileOpen ? <X className="w-9 h-9" /> : <Menu className="w-9 h-9" />}
             </Button>
           </div>
         </div>
@@ -247,7 +228,7 @@ export function Navigation() {
           createPortal(
             <div
               id="mobile-menu"
-              className="fixed inset-0 z-[60] md:hidden text-white bg-primary/70 backdrop-blur-xl backdrop-saturate-150 animate-slide-in-right"
+              className="fixed inset-0 z-60 md:hidden text-white bg-primary/70 backdrop-blur-xl backdrop-saturate-150 animate-slide-in-right"
             >
               {/* Close (X) button inside overlay */}
               <Button
@@ -257,18 +238,7 @@ export function Navigation() {
                 onClick={() => setMobileOpen(false)}
                 className="absolute right-3 top-3 text-white/90 hover:text-white hover:bg-white/10 w-12 h-12"
               >
-                <svg
-                  className="w-8 h-8"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6L6 18" />
-                  <path d="M6 6l12 12" />
-                </svg>
+                <X className="w-10 h-10" />
               </Button>
 
               {/* Centered menu items, full-width hover/active backgrounds */}
