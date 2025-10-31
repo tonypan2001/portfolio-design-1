@@ -23,9 +23,19 @@ export function SkillsSection() {
   return (
     <section
       id="skills"
-      className="scroll-section min-h-screen flex items-center justify-center"
+      className="scroll-section relative min-h-screen flex items-center justify-center"
     >
-      <div className="container px-4">
+      {/* Decorative bottom wave */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        <img
+          src="/wave-bottom.svg"
+          alt=""
+          className="absolute inset-x-0 bottom-0 w-full h-40 md:h-56 object-cover select-none"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="container relative z-10 px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center">
           {section.skillsSection.title}
         </h2>
