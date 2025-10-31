@@ -3,6 +3,7 @@ export const navigation = {
   menuItems: [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
+    { label: "What we do", href: "#what-we-do" },
     { label: "Skills", href: "#skills" },
     { label: "Contact", href: "#contact" },
   ],
