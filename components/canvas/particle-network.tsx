@@ -22,30 +22,37 @@ export default function ParticleNetwork({
     const ctx = canvas.getContext("2d")!;
     const dpr = Math.max(1, window.devicePixelRatio || 1);
 
-    const resize = () => {
-      const { innerWidth: w, innerHeight: h } = window;
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
+    // Measure the size of the parent (hero section) so the canvas
+    // always matches the visible section bounds across displays/DPIs.
+    const measureAndResize = () => {
+      const parent = canvas.parentElement as HTMLElement | null;
+      const rect = parent?.getBoundingClientRect();
+      const w = Math.ceil(rect?.width ?? window.innerWidth);
+      const h = Math.ceil(rect?.height ?? window.innerHeight);
+      canvas.width = Math.ceil(w * dpr);
+      canvas.height = Math.ceil(h * dpr);
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { w, h };
     };
-    resize();
-    window.addEventListener("resize", resize);
+    const { w: initW, h: initH } = measureAndResize();
+    window.addEventListener("resize", measureAndResize);
 
     // init particles
     const rand = (min: number, max: number) =>
       Math.random() * (max - min) + min;
     particlesRef.current = Array.from({ length: count }, () => ({
-      x: rand(0, window.innerWidth),
-      y: rand(0, window.innerHeight),
+      x: rand(0, initW),
+      y: rand(0, initH),
       vx: rand(-maxSpeed, maxSpeed),
       vy: rand(-maxSpeed, maxSpeed),
     }));
 
     const step = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      // Use canvas CSS size for logical drawing bounds
+      const w = canvas.clientWidth || window.innerWidth;
+      const h = canvas.clientHeight || window.innerHeight;
       ctx.clearRect(0, 0, w, h);
 
       const pts = particlesRef.current;
@@ -107,7 +114,7 @@ export default function ParticleNetwork({
     step();
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", measureAndResize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -118,7 +125,7 @@ export default function ParticleNetwork({
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="fixed inset-0 -z-10 bg-primary"
+      className="absolute inset-0 z-0 bg-primary pointer-events-none"
     />
   );
 }
