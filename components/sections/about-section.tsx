@@ -41,7 +41,7 @@ export function AboutSection() {
           {section.aboutSection.tools.map((t) => (
             <li
               key={t}
-              className="px-3 py-1 rounded-full bg-primary/5 text-foreground/80 text-sm ring-1 ring-primary/10"
+              className="px-3 py-1 rounded-full bg-primary/5 text-foreground/80 text-sm ring-1 ring-primary/10 transition-transform duration-200 ease-out hover:scale-105 hover:bg-primary/10 hover:ring-primary/20 hover:shadow-sm active:scale-95"
             >
               {t}
             </li>
