@@ -1,8 +1,5 @@
 export const navigation = {
   logo: "PanStudio",
-  // Tailwind class to control desktop menu item text size
-  // Example values: "md:text-lg", "md:text-xl", "md:text-2xl"
-  desktopTextClass: "md:text-xl",
   menuItems: [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
