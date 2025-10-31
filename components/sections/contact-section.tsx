@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Mail, Github, Twitter, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ParticleNetwork from "../canvas/particle-network";
 
 export function ContactSection() {
   const emailHref = `mailto:${section.contactSection.email}`;
@@ -24,7 +25,9 @@ export function ContactSection() {
       data-fv
       className="scroll-section relative min-h-screen flex items-center justify-center bg-primary"
     >
-      <div className="container px-4">
+      {/* Particle background */}
+      <ParticleNetwork />
+      <div className="container px-4 relative z-10">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-white">
           {section.contactSection.title}
         </h2>
