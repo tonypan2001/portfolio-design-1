@@ -247,7 +247,7 @@ export function Navigation() {
           createPortal(
             <div
               id="mobile-menu"
-              className="fixed inset-0 z-60 md:hidden text-white bg-primary/70 backdrop-blur-xl backdrop-saturate-150"
+              className="fixed inset-0 z-[60] md:hidden text-white bg-primary/70 backdrop-blur-xl backdrop-saturate-150 animate-slide-in-right"
             >
               {/* Close (X) button inside overlay */}
               <Button
