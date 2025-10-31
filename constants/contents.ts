@@ -52,6 +52,97 @@ export const section = {
         items: ["Figma", "Blender", "Canva"],
       },
     ],
+    // Detailed tech cards (used by the UI)
+    techs: [
+      {
+        name: "Next.js",
+        category: "Frontend",
+        level: "Advanced",
+        years: 3,
+        icon: "/icons/nextjs.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-wordmark.svg",
+        summary:
+          "App Router, server components, route handlers, metadata, and image optimization with strong TypeScript and performance focus.",
+      },
+      {
+        name: "React",
+        category: "Frontend",
+        level: "Advanced",
+        years: 4,
+        icon: "/icons/react.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        summary:
+          "Hooks, context, suspense, and state management patterns with accessibility and UX best practices.",
+      },
+      {
+        name: "TypeScript",
+        category: "Frontend",
+        level: "Advanced",
+        years: 4,
+        icon: "/icons/typescript.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        summary:
+          "Strong typing for React/Next projects, generics, utility types, and incremental typing for safety and DX.",
+      },
+      {
+        name: "Tailwind CSS",
+        category: "Frontend",
+        level: "Advanced",
+        years: 3,
+        icon: "/icons/tailwindcss.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        summary:
+          "Utility-first styling, design systems, responsive layouts, and animations with clean, consistent UI patterns.",
+      },
+      {
+        name: "SCSS",
+        category: "Frontend",
+        level: "Intermediate",
+        years: 3,
+        icon: "/icons/scss.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg",
+        summary:
+          "Modular styles, variables/mixins, and layered architectures for maintainable styling when needed.",
+      },
+      {
+        name: "Figma",
+        category: "Design",
+        level: "Advanced",
+        years: 4,
+        icon: "/icons/figma.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+        summary:
+          "Wireframes to hi‑fi mocks, component libraries, and collaborative handoff workflows.",
+      },
+      {
+        name: "Blender",
+        category: "Design",
+        level: "Intermediate",
+        years: 2,
+        icon: "/icons/blender.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg",
+        summary:
+          "Basic modeling, lighting, and materials for simple 3D assets integrated into web experiences.",
+      },
+      {
+        name: "Canva",
+        category: "Design",
+        level: "Intermediate",
+        years: 4,
+        icon: "/icons/canva.svg",
+        iconUrl:
+          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg",
+        summary:
+          "Quick branding assets, social graphics, and light compositing to support product visuals.",
+      },
+    ],
   },
   contactSection: {
     title: "Let's Connect",
