@@ -68,7 +68,7 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
       {/* Canvas Background */}
       <ParticleNetwork />
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-linear-to-b from-background via-background to-primary/30" />
+      <div className="absolute inset-0 bg-linear-to-b from-background via-background to-primary/40" />
 
       <div className="container relative z-10 px-4 pt-20 md:pt-32 pb-0">
         <div className="flex flex-col items-center">
