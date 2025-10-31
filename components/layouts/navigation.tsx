@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useHoverHighlight } from "@/hooks/useHoverHighlight";
 import { navigation } from "@/constants/contents";
 import Link from "next/link";
+import Logo from "@/components/ui/logo";
 import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 
@@ -123,13 +124,14 @@ export function Navigation() {
           <div className="shrink-0">
             <a
               href="#home"
-              className="text-xl md:text-2xl font-bold text-foreground"
+              className="inline-flex items-center gap-2 text-foreground"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick("#home");
               }}
             >
-              {navigation.logo}
+              <Logo className="h-8 md:h-9 w-auto" title={navigation.logo} />
+              <span className="sr-only">{navigation.logo}</span>
             </a>
           </div>
 
