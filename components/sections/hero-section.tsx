@@ -15,6 +15,7 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { hero, heroCard } from "@/constants/contents";
 import ParticleNetwork from "../canvas/particle-network";
+import R3FReadySignal from "../canvas/r3f-ready-signal";
 
 interface HeroSectionProps {
   cardPosition?: "left" | "middle" | "right";
@@ -130,6 +131,8 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
               gl={{ powerPreference: "high-performance", antialias: true }}
             >
               <Suspense fallback={null}>
+                {/* Signal when Drei loaders finish (e.g., Environment HDR) */}
+                <R3FReadySignal />
                 <Scene scrollImpulse={scrollImpulse} />
               </Suspense>
             </Canvas>

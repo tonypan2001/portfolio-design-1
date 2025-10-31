@@ -12,6 +12,8 @@ export default function ProgressLoader({
   barColorClass = "bg-indigo-400",
   backdropClass = "bg-neutral-950",
   text = "Initializing PanStudio…",
+  waitForEvents = [],
+  waitTimeoutMs = 20000,
 }: LoaderProps) {
   const [progress, setProgress] = useState(0); // 0-100
   const [visible, setVisible] = useState(true);
@@ -73,6 +75,38 @@ export default function ProgressLoader({
         });
       streams.push(p);
       update();
+    }
+
+    // รอ custom events (เช่น R3F พร้อมใช้งาน)
+    if (typeof window !== "undefined" && waitForEvents.length > 0) {
+      for (const evtName of waitForEvents) {
+        unknownTotalUnits += 1;
+        update();
+        const p = new Promise<void>((resolve) => {
+          let resolved = false;
+          const onEvt = () => {
+            if (resolved) return;
+            resolved = true;
+            window.removeEventListener(evtName, onEvt);
+            // Clear the timeout below
+            window.clearTimeout(timer);
+            unknownLoadedUnits += 1;
+            update();
+            resolve();
+          };
+          window.addEventListener(evtName, onEvt, { once: true });
+          // Safety timeout
+          const timer = window.setTimeout(() => {
+            if (resolved) return;
+            resolved = true;
+            window.removeEventListener(evtName, onEvt);
+            unknownLoadedUnits += 1;
+            update();
+            resolve();
+          }, Math.max(3000, waitTimeoutMs));
+        });
+        streams.push(p);
+      }
     }
 
     // โหลดไฟล์ต่าง ๆ แบบนับ bytes

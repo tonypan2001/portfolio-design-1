@@ -36,6 +36,7 @@ export default function RootLayout({
           assets={criticalAssetPaths}
           includeFonts={true} // รอ webfont ด้วย
           minShowMs={900} // กันกระพริบ
+          waitForEvents={["r3f-ready"]}
           barColorClass="bg-gradient-to-r from-indigo-400 to-fuchsia-400"
           backdropClass="bg-neutral-950"
           text="Loading assets…"
