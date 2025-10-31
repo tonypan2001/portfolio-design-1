@@ -14,11 +14,13 @@ import {
 } from "@/components/ui/select";
 import { navigation } from "@/constants/contents";
 import Link from "next/link";
+import { createPortal } from "react-dom";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const rafTick = useRef(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const {
     menuRef,
     rect: hoverRect,
@@ -79,6 +81,25 @@ export function Navigation() {
     onScrollStable();
     return () => window.removeEventListener("scroll", onScrollStable);
   }, []);
+
+  // Lock body scroll while mobile menu is open
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
+  // Auto-close mobile menu on resize to md and above
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768 && mobileOpen) setMobileOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [mobileOpen]);
 
   const handleNavClick = (href: string) => {
     const element = document.getElementById(href.substring(1));
@@ -187,54 +208,97 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
-              onClick={() => {
-                const mobileMenu = document.getElementById("mobile-menu");
-                mobileMenu?.classList.toggle("hidden");
-              }}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              className={cn(
+                "relative md:hidden w-10 h-10",
+                mobileOpen && "z-[70] text-white",
+              )}
+              onClick={() => setMobileOpen((v) => !v)}
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute left-1/2 top-1/2 -translate-x-1/2 block w-6 h-0.5 bg-current transition-transform duration-300",
+                  mobileOpen ? "translate-y-0 rotate-45" : "-translate-y-2 rotate-0",
+                )}
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute left-1/2 top-1/2 -translate-x-1/2 block w-6 h-0.5 bg-current transition-opacity duration-300",
+                  mobileOpen ? "opacity-0" : "opacity-100",
+                )}
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute left-1/2 top-1/2 -translate-x-1/2 block w-6 h-0.5 bg-current transition-transform duration-300",
+                  mobileOpen ? "translate-y-0 -rotate-45" : "translate-y-2 rotate-0",
+                )}
+              />
             </Button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        <div id="mobile-menu" className="hidden md:hidden pb-4">
-          <div className="flex flex-col gap-2">
-            {navigation.menuItems.map((item) => (
+        {/* Mobile Fullscreen Menu via Portal (escapes transformed nav) */}
+        {mobileOpen &&
+          createPortal(
+            <div
+              id="mobile-menu"
+              className="fixed inset-0 z-[60] md:hidden text-white bg-primary/70 backdrop-blur-xl backdrop-saturate-150"
+            >
+              {/* Close (X) button inside overlay */}
               <Button
-                key={item.href}
                 variant="ghost"
-                onClick={() => {
-                  handleNavClick(item.href);
-                  document
-                    .getElementById("mobile-menu")
-                    ?.classList.add("hidden");
-                }}
-                className={cn(
-                  "justify-start text-sm font-medium",
-                  activeSection === item.href.substring(1)
-                    ? "text-foreground bg-accent"
-                    : "text-muted-foreground",
-                )}
+                size="icon-lg"
+                aria-label="Close menu"
+                onClick={() => setMobileOpen(false)}
+                className="absolute right-3 top-3 text-white/90 hover:text-white/100 hover:bg-white/10 w-12 h-12"
               >
-                {item.label}
+                <svg
+                  className="w-8 h-8"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 6L6 18" />
+                  <path d="M6 6l12 12" />
+                </svg>
               </Button>
-            ))}
-          </div>
-        </div>
+
+              {/* Centered menu items */}
+              <div className="flex h-full w-full items-center justify-center px-6">
+                <nav>
+                  <ul className="flex flex-col items-center gap-6 text-center">
+                    {navigation.menuItems.map((item) => (
+                      <li key={item.href}>
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            handleNavClick(item.href);
+                            setMobileOpen(false);
+                          }}
+                          className={cn(
+                            "justify-center text-xl text-white/90 hover:text-white hover:bg-white/10 px-6 py-3",
+                            activeSection === item.href.substring(1) &&
+                              "text-white bg-white/10",
+                          )}
+                        >
+                          {item.label}
+                        </Button>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+            </div>,
+            document.body,
+          )}
       </div>
     </nav>
   );
