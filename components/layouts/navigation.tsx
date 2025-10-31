@@ -157,7 +157,8 @@ export function Navigation() {
                     handleNavClick(item.href);
                   }}
                   className={cn(
-                    "relative text-xl font-light transition-colors cursor-pointer px-4 py-3",
+                    "relative font-light transition-colors cursor-pointer px-4 py-3",
+                    navigation.desktopTextClass || "md:text-xl",
                     activeSection === item.href.substring(1)
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
