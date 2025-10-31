@@ -183,7 +183,7 @@
 }
 
 /* Scroll-triggered fade-ins per section */
-:root { --fv-duration: 2400ms; --fv-distance: 24px; }
+:root { --fv-duration: 2000ms; --fv-distance: 20px; }
 
 /* Set common transition on all items within fv-enabled sections */
 body.fv-active section[data-fv] .fv-item {
