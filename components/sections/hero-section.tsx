@@ -14,7 +14,10 @@ import {
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { hero, heroCard } from "@/constants/contents";
-import ParticleNetwork from "../canvas/particle-network";
+import dynamic from "next/dynamic";
+const ParticleNetwork = dynamic(() => import("../canvas/particle-network"), {
+  ssr: false,
+});
 
 interface HeroSectionProps {
   cardPosition?: "left" | "middle" | "right";
@@ -49,8 +52,10 @@ function Scene() {
 export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimer = useRef<number | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const onScroll = () => {
       if (!isScrolling) setIsScrolling(true);
       if (scrollTimer.current) window.clearTimeout(scrollTimer.current);
@@ -90,15 +95,17 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
             className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] mb-8 md:mb-12"
             style={{ willChange: "transform", transform: "translateZ(0)" }}
           >
-            <Canvas
-              camera={{ position: [0, 0, 5], fov: 50 }}
-              dpr={isScrolling ? 1 : [1, 1.5]}
-              gl={{ powerPreference: "high-performance", antialias: true }}
-            >
-              <Suspense fallback={null}>
-                <Scene />
-              </Suspense>
-            </Canvas>
+            {mounted && (
+              <Canvas
+                camera={{ position: [0, 0, 5], fov: 50 }}
+                dpr={isScrolling ? 1 : [1, 1.5]}
+                gl={{ powerPreference: "high-performance", antialias: true }}
+              >
+                <Suspense fallback={null}>
+                  <Scene />
+                </Suspense>
+              </Canvas>
+            )}
           </div>
         </div>
       </div>

@@ -19,6 +19,7 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const rafTick = useRef(false);
+  const navRef = useRef<HTMLElement | null>(null);
   const {
     menuRef,
     rect: hoverRect,
@@ -49,7 +50,7 @@ export function Navigation() {
   // Stable active section detection (no jitter):
   // pick the last section whose top is above the navbar offset.
   useEffect(() => {
-    const navHeight = 80;
+    const getNavHeight = () => navRef.current?.offsetHeight || 80;
     const ids = navigation.menuItems.map((item) => item.href.substring(1));
 
     const onScrollStable = () => {
@@ -63,7 +64,7 @@ export function Navigation() {
           const el = document.getElementById(id);
           if (!el) continue;
           const top = el.getBoundingClientRect().top;
-          if (top - navHeight <= 1) {
+          if (top - getNavHeight() <= 1) {
             current = id;
           } else {
             break;
@@ -83,7 +84,7 @@ export function Navigation() {
   const handleNavClick = (href: string) => {
     const element = document.getElementById(href.substring(1));
     if (element) {
-      const navHeight = 80; // Height of the fixed navbar
+      const navHeight = navRef.current?.offsetHeight || 80; // Height of the fixed navbar
       smoothScrollToElement(element, {
         offset: navHeight,
         duration: 850,
@@ -94,6 +95,7 @@ export function Navigation() {
 
   return (
     <nav
+      ref={navRef}
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 composite-layer",
         isScrolled
@@ -102,7 +104,7 @@ export function Navigation() {
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between min-h-16 md:min-h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <a
