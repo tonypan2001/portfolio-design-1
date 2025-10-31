@@ -1,6 +1,5 @@
 "use client";
 import { Navigation } from "../layouts/navigation";
-import { AboutSection } from "../sections/about-section";
 import { WhatWeDoSection } from "../sections/what-we-do-section";
 import { ContactSection } from "../sections/contact-section";
 import { HeroSection } from "../sections/hero-section";
@@ -13,7 +12,6 @@ export default function MainPage() {
     <main className="min-h-screen">
       <Navigation />
       <HeroSection cardPosition="left" />
-      <AboutSection />
       <WhatWeDoSection />
       <SkillsSection />
       <FeedbackSection />
