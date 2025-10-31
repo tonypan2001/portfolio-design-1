@@ -4,6 +4,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
+      data-fv
       className="scroll-section relative min-h-screen flex items-center justify-center bg-background"
     >
       {/* Background/decoration layer ABOVE section background, BELOW content */}
@@ -31,17 +32,17 @@ export function AboutSection() {
         <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />
       </div>
       <div className="container relative z-10 px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-foreground">
+        <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
           {section.aboutSection.title}
         </h2>
-        <p className="text-center mt-4 max-w-2xl mx-auto text-muted-foreground">
+        <p className="fv-item text-center mt-4 max-w-2xl mx-auto text-muted-foreground">
           {section.aboutSection.content}
         </p>
         <ul className="mt-6 flex flex-wrap justify-center gap-2">
           {section.aboutSection.tools.map((t) => (
             <li
               key={t}
-              className="px-3 py-1 rounded-full bg-primary/5 text-foreground/80 text-sm ring-1 ring-primary/10 transition-transform duration-200 ease-out hover:scale-105 hover:bg-primary/10 hover:ring-primary/20 hover:shadow-sm active:scale-95"
+              className="fv-item px-3 py-1 rounded-full bg-primary/5 text-foreground/80 text-sm ring-1 ring-primary/10 transition-transform duration-200 ease-out hover:scale-105 hover:bg-primary/10 hover:ring-primary/20 hover:shadow-sm active:scale-95"
             >
               {t}
             </li>
@@ -49,7 +50,7 @@ export function AboutSection() {
         </ul>
         <div className="mt-8 grid grid-cols-3 gap-6 max-w-xl mx-auto text-center">
           {section.aboutSection.stats.map((x) => (
-            <div key={x.label}>
+            <div key={x.label} className="fv-item">
               <div className="text-3xl font-semibold tabular-nums text-foreground">
                 {x.value}
               </div>
@@ -57,7 +58,7 @@ export function AboutSection() {
             </div>
           ))}
         </div>
-        <blockquote className="mt-8 text-center text-muted-foreground italic">
+        <blockquote className="fv-item mt-8 text-center text-muted-foreground italic">
           {section.aboutSection.quote}
         </blockquote>
       </div>

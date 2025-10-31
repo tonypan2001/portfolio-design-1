@@ -96,6 +96,7 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
   return (
     <section
       id="home"
+      data-fv
       className="scroll-section relative min-h-screen flex items-start md:items-center justify-start md:justify-center overflow-hidden"
     >
       {/* Canvas Background */}
@@ -107,13 +108,13 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
         <div className="flex flex-col items-center">
           {/* Header Text */}
           <div className="text-center mb-4 md:mb-10 max-w-4xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 md:pt-4 text-balance">
+            <h1 className="fv-item text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 md:pt-4 text-balance">
               {hero.heroText}{" "}
               <span className="bg-linear-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                 {hero.heroTextWithGradient}
               </span>
             </h1>
-            <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+            <p className="fv-item text-base md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
               {hero.heroTextDetail}
             </p>
           </div>
@@ -148,7 +149,7 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
             cardPosition === "right" && "md:justify-end",
           )}
         >
-          <Card className="w-full md:w-[350px] backdrop-blur-sm bg-card/80 border-border/50 shadow-xl">
+          <Card className="fv-item w-full md:w-[350px] backdrop-blur-sm bg-card/80 border-border/50 shadow-xl">
             <CardHeader>
               <CardTitle className="text-2xl md:text-3xl">
                 Discover More
@@ -162,14 +163,14 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
                 {heroCard.heroCardBulletPoint.map((item) => (
                   <li
                     key={item.key}
-                    className="flex items-center gap-2 text-sm"
+                    className="fv-item flex items-center gap-2 text-sm"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
                     <span>{item.text}</span>
                   </li>
                 ))}
               </ul>
-              <Button className="w-full group cursor-pointer" size="lg">
+              <Button className="fv-item w-full group cursor-pointer" size="lg">
                 Explore Now
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>

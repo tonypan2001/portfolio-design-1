@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { criticalAssetPaths } from "@/constants/paths";
 import ProgressLoader from "@/components/layouts/progress-loader";
+import FirstVisitEffects from "@/components/layouts/first-visit-effects";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Run first-visit fade-in effects (no-op after first load) */}
+        <FirstVisitEffects />
         <ProgressLoader
           assets={criticalAssetPaths}
           includeFonts={true} // รอ webfont ด้วย

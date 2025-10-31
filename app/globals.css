@@ -181,3 +181,35 @@
     animation: slide-in-right 300ms ease-out both;
     will-change: transform;
 }
+
+/* Scroll-triggered fade-ins per section */
+:root { --fv-duration: 2400ms; --fv-distance: 24px; }
+
+/* Set common transition on all items within fv-enabled sections */
+body.fv-active section[data-fv] .fv-item {
+  transition-property: opacity, transform;
+  transition-duration: var(--fv-duration);
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* Hidden state */
+body.fv-active section[data-fv].fv-await .fv-item {
+  opacity: 0;
+  transform: translateY(var(--fv-distance));
+}
+
+/* Revealed state */
+body.fv-active section[data-fv].fv-show .fv-item {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger by element type (optional, gentle) */
+body.fv-active section[data-fv].fv-show h1.fv-item,
+body.fv-active section[data-fv].fv-show h2.fv-item,
+body.fv-active section[data-fv].fv-show h3.fv-item { transition-delay: 220ms; }
+body.fv-active section[data-fv].fv-show p.fv-item,
+body.fv-active section[data-fv].fv-show li.fv-item { transition-delay: 440ms; }
+body.fv-active section[data-fv].fv-show [data-slot^="card"].fv-item { transition-delay: 660ms; }
+body.fv-active section[data-fv].fv-show [data-slot="button"].fv-item { transition-delay: 880ms; }

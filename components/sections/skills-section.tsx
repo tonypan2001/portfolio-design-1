@@ -23,6 +23,7 @@ export function SkillsSection() {
   return (
     <section
       id="skills"
+      data-fv
       className="scroll-section relative min-h-screen flex items-center justify-center"
     >
       {/* Decorative bottom wave */}
@@ -36,7 +37,7 @@ export function SkillsSection() {
         />
       </div>
       <div className="container relative z-10 px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center">
+        <h2 className="fv-item text-4xl md:text-5xl font-bold text-center">
           {section.skillsSection.title}
         </h2>
         {/* Grid of tech cards */}
@@ -44,7 +45,7 @@ export function SkillsSection() {
           {techs.map((t) => (
             <Card
               key={t.name}
-              className="backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
+              className="fv-item backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
             >
               <CardHeader className="gap-2">
                 <CardTitle className="text-xl md:text-2xl flex items-center justify-between">

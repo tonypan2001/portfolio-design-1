@@ -21,19 +21,20 @@ export function ContactSection() {
   return (
     <section
       id="contact"
+      data-fv
       className="scroll-section relative min-h-screen flex items-center justify-center bg-primary"
     >
       <div className="container px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-white">
+        <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-white">
           {section.contactSection.title}
         </h2>
-        <p className="text-center mt-4 max-w-2xl mx-auto text-white/80">
+        <p className="fv-item text-center mt-4 max-w-2xl mx-auto text-white/80">
           {section.contactSection.content}
         </p>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
           {/* Email card */}
-          <Card className="md:col-span-2 bg-white/10 backdrop-blur-xl border-white/20 text-white shadow-lg transition-shadow duration-300 hover:ring-2 hover:ring-white/40 hover:shadow-[0_0_28px_rgba(255,255,255,0.35)]">
+          <Card className="fv-item md:col-span-2 bg-white/10 backdrop-blur-xl border-white/20 text-white shadow-lg transition-shadow duration-300 hover:ring-2 hover:ring-white/40 hover:shadow-[0_0_28px_rgba(255,255,255,0.35)]">
             <CardHeader>
               <CardTitle className="text-2xl">Get in touch</CardTitle>
               <CardDescription className="text-white/70">Prefer email? I’ll get back soon.</CardDescription>
@@ -79,7 +80,7 @@ export function ContactSection() {
           </Card>
 
           {/* Quick blurb card */}
-          <Card className="bg-white/10 backdrop-blur-xl border-white/20 text-white shadow-lg transition-shadow duration-300 hover:ring-2 hover:ring-white/40 hover:shadow-[0_0_28px_rgba(255,255,255,0.35)]">
+          <Card className="fv-item bg-white/10 backdrop-blur-xl border-white/20 text-white shadow-lg transition-shadow duration-300 hover:ring-2 hover:ring-white/40 hover:shadow-[0_0_28px_rgba(255,255,255,0.35)]">
             <CardHeader>
               <CardTitle className="text-xl">Availability</CardTitle>
               <CardDescription className="text-white/70">Freelance & collaboration friendly</CardDescription>
