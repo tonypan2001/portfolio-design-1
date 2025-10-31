@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { section } from "@/constants/contents";
+import { section as sectionEN } from "@/constants/contents";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star } from "lucide-react";
 
-export function FeedbackSection() {
-  const base = section.feedbackSection?.testimonials ?? [];
+export function FeedbackSection({ feedback }: { feedback?: typeof sectionEN.feedbackSection }) {
+  const data = feedback ?? sectionEN.feedbackSection;
+  const base = data?.testimonials ?? [];
   const items = [...base, ...base]; // duplicate for seamless loop
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
@@ -107,7 +108,7 @@ export function FeedbackSection() {
       </div>
       <div className="container px-4 relative z-10">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
-          {section.feedbackSection.title}
+          {data.title}
         </h2>
         <p className="fv-item text-center mt-3 md:mt-4 max-w-2xl mx-auto text-muted-foreground">
           Real words from teams we partnered with.

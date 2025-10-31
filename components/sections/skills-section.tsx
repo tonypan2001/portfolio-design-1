@@ -1,4 +1,4 @@
-import { section } from "@/constants/contents";
+import { section as sectionEN } from "@/constants/contents";
 import {
   Card,
   CardContent,
@@ -8,8 +8,9 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-export function SkillsSection() {
-  const techs = section.skillsSection.techs ?? [];
+export function SkillsSection({ skills }: { skills?: typeof sectionEN.skillsSection }) {
+  const data = skills ?? sectionEN.skillsSection;
+  const techs = data.techs ?? [];
   const TechIcon = ({
     iconUrl,
     icon,
@@ -63,7 +64,7 @@ export function SkillsSection() {
       </div>
       <div className="container relative z-10 px-4">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center">
-          {section.skillsSection.title}
+          {data.title}
         </h2>
         {/* Grid of tech cards */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">

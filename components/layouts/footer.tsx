@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { section } from "@/constants/contents";
+import { section as sectionEN } from "@/constants/contents";
 
-export function Footer() {
-  const { title, content } = section.footerSection;
+export function Footer({ footer }: { footer?: typeof sectionEN.footerSection }) {
+  const { title, content } = footer ?? sectionEN.footerSection;
   return (
     <footer className="border-t border-border bg-background">
       <div className="container mx-auto px-4 py-8 md:py-10 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
@@ -14,4 +14,3 @@ export function Footer() {
     </footer>
   );
 }
-

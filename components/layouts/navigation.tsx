@@ -10,13 +10,17 @@ import Link from "next/link";
 import Logo from "@/components/ui/logo";
 import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
-export function Navigation() {
+export function Navigation({ nav }: { nav?: typeof navigation }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const rafTick = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [lang, setLang] = useState<"en" | "th">("en");
+  const router = useRouter();
+  const pathname = usePathname();
+  const currentLang: "en" | "th" = pathname?.startsWith("/th") ? "th" : "en";
+  const [lang, setLang] = useState<"en" | "th">(currentLang);
   const {
     menuRef,
     rect: hoverRect,
@@ -48,7 +52,8 @@ export function Navigation() {
   // pick the last section whose top is above the navbar offset.
   useEffect(() => {
     const navHeight = 80;
-    const ids = navigation.menuItems.map((item) => item.href.substring(1));
+    const data = nav ?? navigation;
+    const ids = data.menuItems.map((item) => item.href.substring(1));
 
     const onScrollStable = () => {
       if (rafTick.current) return;
@@ -97,6 +102,11 @@ export function Navigation() {
     return () => window.removeEventListener("resize", onResize);
   }, [mobileOpen]);
 
+  // Keep local lang state in sync with path
+  useEffect(() => {
+    setLang(currentLang);
+  }, [currentLang]);
+
   const handleNavClick = (href: string) => {
     const element = document.getElementById(href.substring(1));
     if (element) {
@@ -130,8 +140,8 @@ export function Navigation() {
                 handleNavClick("#home");
               }}
             >
-              <Logo className="h-8 md:h-9 w-auto" title={navigation.logo} />
-              <span className="sr-only">{navigation.logo}</span>
+              <Logo className="h-8 md:h-9 w-auto" title={(nav ?? navigation).logo} />
+              <span className="sr-only">{(nav ?? navigation).logo}</span>
             </a>
           </div>
 
@@ -158,7 +168,7 @@ export function Navigation() {
 
             {/* เมนูจริง */}
             <div className="relative z-10 flex items-center gap-1">
-              {navigation.menuItems.map((item) => (
+              {(nav ?? navigation).menuItems.map((item) => (
                 <Link
                   key={item.href}
                   data-href={item.href} // ⬅️ ใช้จับ active element
@@ -190,7 +200,10 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-1 justify-self-end rounded-full border border-border/50 p-0.5">
             <button
               type="button"
-              onClick={() => setLang("en")}
+              onClick={() => {
+                if (currentLang !== "en") router.push("/");
+                setLang("en");
+              }}
               className={cn(
                 "h-8 px-2 rounded-full inline-flex items-center gap-2 transition-colors cursor-pointer",
                 lang === "en"
@@ -211,7 +224,10 @@ export function Navigation() {
             </button>
             <button
               type="button"
-              onClick={() => setLang("th")}
+              onClick={() => {
+                if (currentLang !== "th") router.push("/th");
+                setLang("th");
+              }}
               className={cn(
                 "h-8 px-2 rounded-full inline-flex items-center gap-2 transition-colors cursor-pointer",
                 lang === "th"
@@ -273,7 +289,7 @@ export function Navigation() {
               <div className="flex h-full w-full items-center justify-center">
                 <nav className="w-full">
                   <ul className="flex flex-col w-full gap-4 text-center">
-                    {navigation.menuItems.map((item) => (
+                    {(nav ?? navigation).menuItems.map((item) => (
                       <li key={item.href} className="w-full">
                         <Button
                           variant="ghost"

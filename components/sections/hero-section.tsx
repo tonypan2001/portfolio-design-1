@@ -13,12 +13,14 @@ import {
 } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { hero, heroCard } from "@/constants/contents";
+import { hero as heroEN, heroCard as heroCardEN } from "@/constants/contents";
 import ParticleNetwork from "../canvas/particle-network";
 import R3FReadySignal from "../canvas/r3f-ready-signal";
 
 interface HeroSectionProps {
   cardPosition?: "left" | "middle" | "right";
+  hero?: typeof heroEN;
+  heroCard?: typeof heroCardEN;
 }
 
 function Scene({ scrollImpulse = 0 }: { scrollImpulse?: number }) {
@@ -68,7 +70,9 @@ function Scene({ scrollImpulse = 0 }: { scrollImpulse?: number }) {
   );
 }
 
-export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
+export function HeroSection({ cardPosition = "right", hero, heroCard }: HeroSectionProps) {
+  const heroData = hero ?? heroEN;
+  const heroCardData = heroCard ?? heroCardEN;
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimer = useRef<number | null>(null);
   const [scrollImpulse, setScrollImpulse] = useState(0);
@@ -110,13 +114,13 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
           {/* Header Text */}
           <div className="text-center mb-4 md:mb-10 max-w-4xl">
             <h1 className="fv-item text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 md:pt-4 text-balance">
-              {hero.heroText}{" "}
+              {heroData.heroText}{" "}
               <span className="bg-linear-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                {hero.heroTextWithGradient}
+                {heroData.heroTextWithGradient}
               </span>
             </h1>
             <p className="fv-item text-base md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-              {hero.heroTextDetail}
+              {heroData.heroTextDetail}
             </p>
           </div>
 
@@ -163,7 +167,7 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 mb-6">
-                {heroCard.heroCardBulletPoint.map((item) => (
+                {heroCardData.heroCardBulletPoint.map((item) => (
                   <li
                     key={item.key}
                     className="fv-item flex items-center gap-2 text-sm"

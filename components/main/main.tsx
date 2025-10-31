@@ -6,17 +6,19 @@ import { HeroSection } from "../sections/hero-section";
 import { SkillsSection } from "../sections/skills-section";
 import { FeedbackSection } from "../sections/feedback-section";
 import { Footer } from "../layouts/footer";
+import { getContent, Lang } from "@/constants/i18n";
 
-export default function MainPage() {
+export default function MainPage({ lang = "en" as Lang }: { lang?: Lang }) {
+  const content = getContent(lang);
   return (
     <main className="min-h-screen">
-      <Navigation />
-      <HeroSection cardPosition="left" />
-      <WhatWeDoSection />
-      <SkillsSection />
-      <FeedbackSection />
-      <ContactSection />
-      <Footer />
+      <Navigation nav={content.navigation} />
+      <HeroSection cardPosition="left" hero={content.hero} heroCard={content.heroCard} />
+      <WhatWeDoSection whatWeDo={content.section.whatWeDoSection} />
+      <SkillsSection skills={content.section.skillsSection} />
+      <FeedbackSection feedback={content.section.feedbackSection} />
+      <ContactSection contact={content.section.contactSection} />
+      <Footer footer={content.section.footerSection} />
     </main>
   );
 }

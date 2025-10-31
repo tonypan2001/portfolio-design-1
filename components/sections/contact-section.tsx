@@ -1,15 +1,16 @@
 "use client";
 
-import { section } from "@/constants/contents";
+import { section as sectionEN } from "@/constants/contents";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, Github, Twitter, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ParticleNetwork from "../canvas/particle-network";
 
-export function ContactSection() {
-  const emailHref = `mailto:${section.contactSection.email}`;
-  const platforms = section.contactSection.platform;
+export function ContactSection({ contact }: { contact?: typeof sectionEN.contactSection }) {
+  const data = contact ?? sectionEN.contactSection;
+  const emailHref = `mailto:${data.email}`;
+  const platforms = data.platform;
 
   const iconFor = (label: string) => {
     const l = label.toLowerCase();
@@ -29,10 +30,10 @@ export function ContactSection() {
       <ParticleNetwork />
       <div className="container px-4 relative z-10">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-white">
-          {section.contactSection.title}
+          {data.title}
         </h2>
         <p className="fv-item text-center mt-4 max-w-2xl mx-auto text-white/80">
-          {section.contactSection.content}
+          {data.content}
         </p>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
@@ -46,7 +47,7 @@ export function ContactSection() {
               <Button asChild className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 border-0">
                 <a href={emailHref}>
                   <Mail className="mr-2 h-4 w-4" />
-                  {section.contactSection.email}
+                  {data.email}
                 </a>
               </Button>
               <span className="text-xs text-white/60">or connect on</span>

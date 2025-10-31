@@ -1,4 +1,4 @@
-import { section } from "@/constants/contents";
+import { section as sectionEN } from "@/constants/contents";
 import {
   Card,
   CardContent,
@@ -8,8 +8,9 @@ import {
 } from "@/components/ui/card";
 import { Globe, MonitorSmartphone, Cloud } from "lucide-react";
 
-export function WhatWeDoSection() {
-  const items = section.whatWeDoSection?.items ?? [];
+export function WhatWeDoSection({ whatWeDo }: { whatWeDo?: typeof sectionEN.whatWeDoSection }) {
+  const data = whatWeDo ?? sectionEN.whatWeDoSection;
+  const items = data?.items ?? [];
 
   return (
     <section
@@ -30,7 +31,7 @@ export function WhatWeDoSection() {
       </div>
       <div className="container relative z-10 px-4 pt-16 md:pt-24 mt-24">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
-          {section.whatWeDoSection.title}
+          {data.title}
         </h2>
         <p className="fv-item text-center mt-3 md:mt-4 max-w-2xl mx-auto text-muted-foreground">
           We help you ship delightful, performant products end‑to‑end.
@@ -84,10 +85,10 @@ export function WhatWeDoSection() {
         {/* About subsection merged under What We Do (no header) */}
         <div id="about" className="mt-12 md:mt-16">
           <p className="fv-item text-center max-w-2xl mx-auto text-muted-foreground">
-            {section.aboutSection.content}
+            {sectionEN.aboutSection.content}
           </p>
           <ul className="mt-6 flex flex-wrap justify-center gap-2">
-            {section.aboutSection.tools.map((t) => (
+            {sectionEN.aboutSection.tools.map((t) => (
               <li
                 key={t}
                 className="fv-item px-3 py-1 rounded-full bg-primary/5 text-foreground/80 text-sm ring-1 ring-primary/10 transition-transform duration-200 ease-out hover:scale-105 hover:bg-primary/10 hover:ring-primary/20 hover:shadow-sm active:scale-95"
@@ -97,7 +98,7 @@ export function WhatWeDoSection() {
             ))}
           </ul>
           <div className="mt-8 grid grid-cols-3 gap-6 max-w-xl mx-auto text-center">
-            {section.aboutSection.stats.map((x) => (
+            {sectionEN.aboutSection.stats.map((x) => (
               <div key={x.label} className="fv-item">
                 <div className="text-3xl font-semibold tabular-nums text-foreground">
                   {x.value}
@@ -107,7 +108,7 @@ export function WhatWeDoSection() {
             ))}
           </div>
           <blockquote className="fv-item mt-8 text-center text-muted-foreground italic">
-            {section.aboutSection.quote}
+            {sectionEN.aboutSection.quote}
           </blockquote>
         </div>
       </div>
