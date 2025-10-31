@@ -236,7 +236,7 @@ export default function ProgressLoader({
       id="app-loader"
       aria-live="polite"
       role="status"
-      className={`${backdropClass} fixed inset-0 z-[9999] flex items-center justify-center`}
+      className={`${backdropClass} fixed inset-0 z-9999 flex items-center justify-center`}
       style={{
         transition: `transform ${EXIT_MS}ms ease-out, opacity ${EXIT_MS}ms ease-out`,
         transform: isExiting ? "translateY(-100%)" : "translateY(0)",
