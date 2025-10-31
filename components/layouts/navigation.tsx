@@ -5,13 +5,6 @@ import { cn } from "@/lib/utils";
 import { smoothScrollToElement } from "@/lib/smooth-scroll";
 import { Button } from "@/components/ui/button";
 import { useHoverHighlight } from "@/hooks/useHoverHighlight";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { navigation } from "@/constants/contents";
 import Link from "next/link";
 import { createPortal } from "react-dom";
@@ -192,52 +185,51 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Language Selector */}
-          <div className="flex items-center gap-2 justify-self-end">
-            <Select value={lang} onValueChange={(v) => setLang(v as any)}>
-              <SelectTrigger size="sm" className="hidden md:flex w-[120px] px-2 py-1 text-sm border-border/50 justify-center">
-                <span className="inline-flex items-center gap-2">
-                  <img
-                    src={lang === "th" ? "https://flagcdn.com/w40/th.png" : "https://flagcdn.com/w40/us.png"}
-                    alt={lang === "th" ? "ไทย" : "English"}
-                    className="w-4 h-4 rounded-full object-cover"
-                    width={16}
-                    height={16}
-                    loading="lazy"
-                  />
-                  {lang === "th" ? "ไทย" : "English"}
-                </span>
-              </SelectTrigger>
-              <SelectContent align="end">
-                <SelectItem value="en">
-                  <span className="inline-flex items-center gap-2">
-                    <img
-                      src="https://flagcdn.com/w40/us.png"
-                      alt="English"
-                      className="w-4 h-4 rounded-full object-cover"
-                      width={16}
-                      height={16}
-                      loading="lazy"
-                    />
-                    English
-                  </span>
-                </SelectItem>
-                <SelectItem value="th">
-                  <span className="inline-flex items-center gap-2">
-                    <img
-                      src="https://flagcdn.com/w40/th.png"
-                      alt="ไทย"
-                      className="w-4 h-4 rounded-full object-cover"
-                      width={16}
-                      height={16}
-                      loading="lazy"
-                    />
-                    ไทย
-                  </span>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-            {/* Mobile Menu Button */}
+          {/* Language Selector (no dropdown to avoid layout shifts) */}
+          <div className="hidden md:flex items-center gap-1 justify-self-end rounded-full border border-border/50 p-0.5">
+            <button
+              type="button"
+              onClick={() => setLang("en")}
+              className={cn(
+                "h-8 px-2 rounded-full inline-flex items-center gap-2 transition-colors cursor-pointer",
+                lang === "en"
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground hover:bg-accent/60",
+              )}
+            >
+              <img
+                src="https://flagcdn.com/w40/us.png"
+                alt="English"
+                className="w-4 h-4 rounded-full object-cover"
+                width={16}
+                height={16}
+                loading="lazy"
+              />
+              <span className="hidden lg:inline">English</span>
+              <span className="lg:hidden">EN</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang("th")}
+              className={cn(
+                "h-8 px-2 rounded-full inline-flex items-center gap-2 transition-colors cursor-pointer",
+                lang === "th"
+                  ? "bg-accent text-foreground"
+                  : "text-muted-foreground hover:bg-accent/60",
+              )}
+            >
+              <img
+                src="https://flagcdn.com/w40/th.png"
+                alt="ไทย"
+                className="w-4 h-4 rounded-full object-cover"
+                width={16}
+                height={16}
+                loading="lazy"
+              />
+              <span className="hidden lg:inline">ไทย</span>
+              <span className="lg:hidden">TH</span>
+            </button>
+          {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="lg"
