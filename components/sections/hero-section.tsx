@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Environment, Float } from "@react-three/drei";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,21 +20,42 @@ interface HeroSectionProps {
   cardPosition?: "left" | "middle" | "right";
 }
 
-function Scene() {
+function Scene({ scrollImpulse = 0 }: { scrollImpulse?: number }) {
+  const groupRef = useRef<any>(null);
+  const velRef = useRef(0);
+
+  // Apply incoming scroll impulse to velocity; Scene re-renders when prop changes
+  useEffect(() => {
+    if (!Number.isFinite(scrollImpulse)) return;
+    velRef.current += scrollImpulse * 0.04; // scale impulse to angular velocity
+  }, [scrollImpulse]);
+
+  useFrame(() => {
+    const g = groupRef.current;
+    if (!g) return;
+    // Integrate velocity into rotation (rotate to the right on positive impulse)
+    g.rotation.y += velRef.current;
+    // Dampen velocity smoothly
+    velRef.current *= 0.92;
+    if (Math.abs(velRef.current) < 1e-4) velRef.current = 0;
+  });
+
   return (
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1} />
-      <Float speed={1.6} rotationIntensity={0.45} floatIntensity={0.45}>
-        <mesh>
-          <torusKnotGeometry args={[1, 0.3, 96, 12]} />
-          <meshStandardMaterial
-            color="#1a1a1a"
-            metalness={0.8}
-            roughness={0.2}
-          />
-        </mesh>
-      </Float>
+      <group ref={groupRef}>
+        <Float speed={1.6} rotationIntensity={0.45} floatIntensity={0.45}>
+          <mesh>
+            <torusKnotGeometry args={[1, 0.3, 96, 12]} />
+            <meshStandardMaterial
+              color="#1a1a1a"
+              metalness={0.8}
+              roughness={0.2}
+            />
+          </mesh>
+        </Float>
+      </group>
       <OrbitControls
         enableZoom={false}
         enablePan={false}
@@ -49,12 +70,24 @@ function Scene() {
 export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimer = useRef<number | null>(null);
+  const [scrollImpulse, setScrollImpulse] = useState(0);
+  const lastY = useRef(0);
 
   useEffect(() => {
+    lastY.current = window.scrollY;
     const onScroll = () => {
       if (!isScrolling) setIsScrolling(true);
       if (scrollTimer.current) window.clearTimeout(scrollTimer.current);
       scrollTimer.current = window.setTimeout(() => setIsScrolling(false), 180);
+
+      const y = window.scrollY;
+      const dy = y - lastY.current;
+      lastY.current = y;
+      // Map scroll delta to a small impulse; positive dy (scroll down) => rotate right
+      const mag = Math.min(Math.abs(dy), 120) / 120; // 0..1
+      const dir = dy >= 0 ? 1 : -1;
+      // nudge the Scene; sign determines direction
+      setScrollImpulse(dir * mag);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -96,7 +129,7 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
               gl={{ powerPreference: "high-performance", antialias: true }}
             >
               <Suspense fallback={null}>
-                <Scene />
+                <Scene scrollImpulse={scrollImpulse} />
               </Suspense>
             </Canvas>
           </div>
