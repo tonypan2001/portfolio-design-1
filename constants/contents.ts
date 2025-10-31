@@ -48,16 +48,22 @@ export const section = {
         title: "Create Website",
         detail:
           "Design and build modern, fast websites tailored to your brand using Next.js, TypeScript, and performance best practices.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1172",
       },
       {
         title: "Responsive",
         detail:
           "Pixel‑perfect layouts that adapt to any device and screen size, delivering a consistent experience on mobile, tablet, and desktop.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1625490939776-17cef70ec079?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=880",
       },
       {
         title: "Deploy & Hosting",
         detail:
           "Production‑ready deployments with CI/CD and optimized hosting on Vercel, Netlify, or your preferred cloud provider.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1600&auto=format&fit=crop",
       },
     ],
   },

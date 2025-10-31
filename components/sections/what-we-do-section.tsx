@@ -30,8 +30,18 @@ export function WhatWeDoSection() {
             return (
               <Card
                 key={it.title}
-                className="fv-item w-full backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
+                className="fv-item group relative overflow-hidden w-full backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
               >
+                {/* Hover background image layer */}
+                {it.imageUrl ? (
+                  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+                    <div
+                      className="absolute inset-0 bg-center bg-cover opacity-10 group-hover:opacity-30 transition-opacity duration-500 will-change-opacity"
+                      style={{ backgroundImage: `url(${it.imageUrl})` }}
+                    />
+                    <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/10 to-background/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+                ) : null}
                 <CardHeader className="items-center text-center">
                   <CardTitle className="text-xl md:text-2xl">{it.title}</CardTitle>
                   <CardDescription className="text-sm md:text-base max-w-prose">
