@@ -122,7 +122,11 @@ export function Navigation() {
           {/* Desktop Menu - Center */}
           <div
             ref={menuRef}
-            className="relative hidden md:flex items-center gap-1"
+            className={cn(
+              "relative hidden md:flex items-center gap-1",
+              // Inherit font size on the whole desktop menu row
+              navigation.desktopTextClass,
+            )}
           >
             {/* Highlight movable pill */}
             <span
@@ -160,6 +164,7 @@ export function Navigation() {
                   }}
                   className={cn(
                     "relative font-light transition-colors cursor-pointer px-4 py-3",
+                    // Keep per-link override if provided
                     navigation.desktopTextClass || "md:text-xl",
                     activeSection === item.href.substring(1)
                       ? "text-foreground"
@@ -170,6 +175,13 @@ export function Navigation() {
                 </Link>
               ))}
             </div>
+
+            {/* Safelist potential font-size utilities so Tailwind v4 generates them
+                even when classes come from config/data. This element is hidden. */}
+            <span
+              aria-hidden
+              className="hidden text-sm text-base text-lg text-xl text-2xl text-3xl md:text-sm md:text-base md:text-lg md:text-xl md:text-2xl md:text-3xl lg:text-xl lg:text-2xl lg:text-3xl"
+            />
           </div>
 
           {/* Language Selector */}

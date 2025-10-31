@@ -8,7 +8,7 @@ export function AboutSection() {
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_50%,var(--secondary-background-color),transparent_70%)]" />
-        <div className="absolute inset-0 opacity-[0.06] bg-[url('/noise.png')]" />
+        <div className="absolute inset-0 opacity-[0.06] bg-[url('/noise.svg')]" />
       </div>
       <div className="container px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-white">
