@@ -88,7 +88,24 @@ export function FeedbackSection() {
       data-fv
       className="scroll-section relative min-h-screen flex items-center justify-center bg-background"
     >
-      <div className="container px-4">
+      {/* Decorative waves */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        <img
+          src="/wave.svg"
+          alt=""
+          className="absolute inset-x-0 top-0 w-full h-40 md:h-48 object-cover select-none"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          src="/wave-bottom.svg"
+          alt=""
+          className="absolute inset-x-0 bottom-0 w-full h-40 md:h-56 object-cover select-none"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="container px-4 relative z-10">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
           {section.feedbackSection.title}
         </h2>
