@@ -70,7 +70,7 @@ export function SkillsSection() {
           {techs.map((t) => (
             <Card
               key={t.name}
-              className="fv-item backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
+              className="fv-item backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-300 ease-out hover:ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
             >
               <CardHeader className="gap-2">
                 <CardTitle className="text-xl md:text-2xl flex items-center justify-between">

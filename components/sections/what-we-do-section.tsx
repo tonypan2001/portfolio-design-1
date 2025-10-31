@@ -47,7 +47,7 @@ export function WhatWeDoSection() {
             return (
               <Card
                 key={it.title}
-                className="fv-item group relative overflow-hidden w-full backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-200 ease-out will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
+                className="fv-item group relative overflow-hidden w-full backdrop-blur-sm bg-card/80 border-border/60 transition-transform duration-300 ease-out hover:ease-[cubic-bezier(0.34,1.56,0.64,1)] will-change-transform hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-lg"
               >
                 {/* Hover background image layer */}
                 {it.imageUrl ? (

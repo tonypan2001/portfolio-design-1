@@ -126,7 +126,7 @@ export function FeedbackSection() {
             {items.map((t, idx) => (
               <Card
                 key={`${t.name}-${idx}`}
-                className="min-w-[280px] md:min-w-[360px] w-[360px] shrink-0 backdrop-blur-sm bg-card/80 border-border/60 hover:shadow-lg transition-transform duration-200 ease-out"
+                className="min-w-[280px] md:min-w-[360px] w-[360px] shrink-0 backdrop-blur-sm bg-card/80 border-border/60 hover:shadow-lg transition-transform duration-300 ease-out hover:ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1 md:hover:-translate-y-2"
               >
                 <CardHeader className="items-center text-center">
                   <img
