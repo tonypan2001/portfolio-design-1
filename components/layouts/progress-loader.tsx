@@ -9,7 +9,7 @@ export default function ProgressLoader({
   assets,
   includeFonts = true,
   minShowMs = 800,
-  barColorClass = "bg-indigo-400",
+  barColorClass = "bg-white",
   backdropClass = "bg-neutral-950",
   text = "Initializing PanStudio…",
   waitForEvents = [],
