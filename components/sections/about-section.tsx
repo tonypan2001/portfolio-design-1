@@ -8,6 +8,15 @@ export function AboutSection() {
     >
       {/* Background/decoration layer ABOVE section background, BELOW content */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        {/* Background image */}
+        <img
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1172"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-5 select-none"
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+        />
         {/* Decorative wave at the top (full-width image) */}
         <img
           src="/wave.svg"
@@ -19,7 +28,7 @@ export function AboutSection() {
         {/* Subtle texture */}
         <div className="absolute inset-0 opacity-[0.06] bg-[url('/noise.svg')]" />
         {/* Fade out to site background at the bottom to blend into Skills */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />
       </div>
       <div className="container relative z-10 px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-foreground">
