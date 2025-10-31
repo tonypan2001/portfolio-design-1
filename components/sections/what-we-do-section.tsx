@@ -1,5 +1,11 @@
 import { section } from "@/constants/contents";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Globe, MonitorSmartphone, Cloud } from "lucide-react";
 
 export function WhatWeDoSection() {
@@ -20,8 +26,9 @@ export function WhatWeDoSection() {
           loading="lazy"
           decoding="async"
         />
+        <div className="absolute inset-x-0 top-0 h-40 md:h-48" />
       </div>
-      <div className="container relative z-10 px-4">
+      <div className="container relative z-10 px-4 pt-16 md:pt-24">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
           {section.whatWeDoSection.title}
         </h2>
@@ -35,8 +42,8 @@ export function WhatWeDoSection() {
             const Icon = title.includes("responsive")
               ? MonitorSmartphone
               : title.includes("deploy") || title.includes("hosting")
-              ? Cloud
-              : Globe; // default for Create Website
+                ? Cloud
+                : Globe; // default for Create Website
             return (
               <Card
                 key={it.title}
@@ -44,7 +51,10 @@ export function WhatWeDoSection() {
               >
                 {/* Hover background image layer */}
                 {it.imageUrl ? (
-                  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 -z-10"
+                  >
                     <div
                       className="absolute inset-0 bg-center bg-cover opacity-10 group-hover:opacity-30 transition-opacity duration-500 will-change-opacity"
                       style={{ backgroundImage: `url(${it.imageUrl})` }}
@@ -53,7 +63,9 @@ export function WhatWeDoSection() {
                   </div>
                 ) : null}
                 <CardHeader className="items-center text-center">
-                  <CardTitle className="text-xl md:text-2xl">{it.title}</CardTitle>
+                  <CardTitle className="text-xl md:text-2xl">
+                    {it.title}
+                  </CardTitle>
                   <CardDescription className="text-sm md:text-base max-w-prose">
                     {it.detail}
                   </CardDescription>
