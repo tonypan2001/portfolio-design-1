@@ -63,24 +63,24 @@ export function HeroSection({ cardPosition = "right" }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="scroll-section relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="scroll-section relative min-h-screen flex items-start md:items-center justify-start md:justify-center overflow-hidden"
     >
       {/* Canvas Background */}
       <ParticleNetwork />
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-primary/30" />
 
-      <div className="container relative z-10 px-4 pt-20 md:pt-32 pb-0">
+      <div className="container relative z-10 px-4 pt-14 md:pt-24 pb-0">
         <div className="flex flex-col items-center">
           {/* Header Text */}
-          <div className="text-center mb-8 md:mb-12 max-w-4xl">
+          <div className="text-center mb-4 md:mb-10 max-w-4xl">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-balance">
               {hero.heroText}{" "}
               <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                 {hero.heroTextWithGradient}
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+            <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
               {hero.heroTextDetail}
             </p>
           </div>
