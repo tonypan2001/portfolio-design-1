@@ -9,7 +9,7 @@ export function WhatWeDoSection() {
     <section
       id="what-we-do"
       data-fv
-      className="scroll-section relative min-h-screen flex items-center justify-center bg-background"
+      className="scroll-section relative min-h-screen flex items-center justify-center bg-background mb-8 md:mb-0"
     >
       <div className="container px-4">
         <h2 className="fv-item text-4xl md:text-5xl font-bold text-center text-foreground">
