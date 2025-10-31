@@ -247,7 +247,7 @@ export function Navigation() {
           createPortal(
             <div
               id="mobile-menu"
-              className="fixed inset-0 z-[60] md:hidden text-white bg-primary/70 backdrop-blur-xl backdrop-saturate-150"
+              className="fixed inset-0 z-60 md:hidden text-white bg-primary/70 backdrop-blur-xl backdrop-saturate-150"
             >
               {/* Close (X) button inside overlay */}
               <Button
@@ -255,7 +255,7 @@ export function Navigation() {
                 size="icon-lg"
                 aria-label="Close menu"
                 onClick={() => setMobileOpen(false)}
-                className="absolute right-3 top-3 text-white/90 hover:text-white/100 hover:bg-white/10 w-12 h-12"
+                className="absolute right-3 top-3 text-white/90 hover:text-white hover:bg-white/10 w-12 h-12"
               >
                 <svg
                   className="w-8 h-8"
@@ -271,12 +271,12 @@ export function Navigation() {
                 </svg>
               </Button>
 
-              {/* Centered menu items */}
-              <div className="flex h-full w-full items-center justify-center px-6">
-                <nav>
-                  <ul className="flex flex-col items-center gap-6 text-center">
+              {/* Centered menu items, full-width hover/active backgrounds */}
+              <div className="flex h-full w-full items-center justify-center">
+                <nav className="w-full">
+                  <ul className="flex flex-col w-full gap-4 text-center">
                     {navigation.menuItems.map((item) => (
-                      <li key={item.href}>
+                      <li key={item.href} className="w-full">
                         <Button
                           variant="ghost"
                           onClick={() => {
@@ -284,7 +284,7 @@ export function Navigation() {
                             setMobileOpen(false);
                           }}
                           className={cn(
-                            "justify-center text-xl text-white/90 hover:text-white hover:bg-white/10 px-6 py-3",
+                            "w-full rounded-none justify-center text-xl text-white/90 hover:text-white hover:bg-white/10 py-8 px-6",
                             activeSection === item.href.substring(1) &&
                               "text-white bg-white/10",
                           )}
