@@ -21,7 +21,7 @@ export function WorksSection({ works }: { works?: WorksData }) {
           Selected projects with crisp visuals and smooth interactions.
         </p>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
           {items.map((w) => (
             <a
               key={w.title}
@@ -34,8 +34,8 @@ export function WorksSection({ works }: { works?: WorksData }) {
                 "hover:shadow-xl hover:scale-[1.01] will-change-transform",
                 // Glowing border on hover (match contact cards)
                 "hover:ring-2 hover:ring-white/40 hover:shadow-[0_0_28px_rgba(255,255,255,0.35)]",
-                // Increased card height
-                "h-64 md:h-72 lg:h-80"
+                // Slightly increased card height
+                "h-72 md:h-80 lg:h-[22rem]"
               )}
             >
               {/* Background image */}
