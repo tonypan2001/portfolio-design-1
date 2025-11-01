@@ -3,6 +3,7 @@ export const navigation = {
   menuItems: [
     { label: "Home", href: "#home" },
     { label: "What we do", href: "#what-we-do" },
+    { label: "Our Works", href: "#works" },
     { label: "Feedback", href: "#feedback" },
     { label: "Contact", href: "#contact" },
   ],
@@ -63,6 +64,39 @@ export const section = {
           "Production‑ready deployments with CI/CD and optimized hosting on Vercel, Netlify, or your preferred cloud provider.",
         imageUrl:
           "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1600&auto=format&fit=crop",
+      },
+    ],
+  },
+  worksSection: {
+    title: "Our Works",
+    items: [
+      {
+        title: "Brand Landing Page",
+        detail:
+          "A fast, responsive marketing site with smooth scroll, anchor nav, and subtle motion.",
+        imageUrl: "/imgs/work1.jpg",
+        href: "http://localhost:3000/",
+      },
+      {
+        title: "Product Showcase",
+        detail:
+          "Grid‑based gallery highlighting features with hover reveals and clean typography.",
+        imageUrl: "/imgs/work2.jpg",
+        href: "http://localhost:3000/",
+      },
+      {
+        title: "Portfolio Microsite",
+        detail:
+          "Minimal microsite focused on performance and accessibility, optimized for Core Web Vitals.",
+        imageUrl: "/imgs/work3.jpg",
+        href: "http://localhost:3000/",
+      },
+      {
+        title: "E‑commerce Concept",
+        detail:
+          "Clean product grid, quick views, and motion that supports discovery without distraction.",
+        imageUrl: "/imgs/work4.jpg",
+        href: "http://localhost:3000/",
       },
     ],
   },
