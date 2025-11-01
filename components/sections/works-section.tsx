@@ -31,7 +31,9 @@ export function WorksSection({ works }: { works?: WorksData }) {
               className={cn(
                 "fv-item group relative overflow-hidden rounded-xl border border-border/60",
                 "bg-muted/20 ring-1 ring-black/0 transition-all duration-500 ease-out",
-                "hover:shadow-xl hover:scale-[1.01] will-change-transform"
+                "hover:shadow-xl hover:scale-[1.01] will-change-transform",
+                // Increased card height
+                "h-64 md:h-72 lg:h-80"
               )}
             >
               {/* Background image */}
@@ -55,31 +57,33 @@ export function WorksSection({ works }: { works?: WorksData }) {
               </div>
 
               {/* Content */}
-              <div className="relative p-5 md:p-6 text-white min-h-[220px] flex flex-col justify-end">
-                <h3 className="text-xl md:text-2xl font-semibold drop-shadow-sm">
-                  {w.title}
-                </h3>
+              <div className="relative p-4 md:p-5 text-white h-full flex flex-col justify-end">
+                <div className="relative rounded-xl bg-black/35 group-hover:bg-black/45 backdrop-blur-sm border border-white/10 p-4 md:p-5 transition-colors duration-300">
+                  <h3 className="text-xl md:text-2xl font-semibold drop-shadow-sm">
+                    {w.title}
+                  </h3>
 
-                {/* Details: hidden until hover, smooth reveal */}
-                <div
-                  className={cn(
-                    "text-white/90 text-sm md:text-base mt-1",
-                    "max-h-0 opacity-0 translate-y-2",
-                    "group-hover:max-h-32 group-hover:opacity-100 group-hover:translate-y-0",
-                    "transition-all duration-300 ease-out overflow-hidden"
-                  )}
-                >
-                  {w.detail}
-                </div>
+                  {/* Details: hidden until hover, smooth reveal */}
+                  <div
+                    className={cn(
+                      "text-white/90 text-sm md:text-base mt-1",
+                      "max-h-0 opacity-0 translate-y-2",
+                      "group-hover:max-h-32 group-hover:opacity-100 group-hover:translate-y-0",
+                      "transition-all duration-300 ease-out overflow-hidden"
+                    )}
+                  >
+                    {w.detail}
+                  </div>
 
-                {/* Visit link: always visible */}
-                <div className="mt-3 flex items-center gap-2 text-sm font-medium">
-                  <span className="inline-flex items-center gap-1 text-white">
-                    Visit work
-                    <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">
-                      →
+                  {/* Visit link: always visible */}
+                  <div className="mt-3 flex items-center gap-2 text-sm font-medium">
+                    <span className="inline-flex items-center gap-1 text-white">
+                      Visit work
+                      <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">
+                        →
+                      </span>
                     </span>
-                  </span>
+                  </div>
                 </div>
               </div>
             </a>
