@@ -71,32 +71,32 @@ export const section = {
     title: "Our Works",
     items: [
       {
-        title: "Brand Landing Page",
+        title: "Portfolio Website",
         detail:
-          "A fast, responsive marketing site with smooth scroll, anchor nav, and subtle motion.",
+          "A personal portfolio showcasing projects and skills with smooth animations, responsive layout, and fast performance.",
         imageUrl: "/imgs/work1.jpg",
-        href: "http://localhost:3000/",
+        href: "https://prompanuechanwech.vercel.app/",
       },
       {
-        title: "Product Showcase",
+        title: "To‑Do List Website",
         detail:
-          "Grid‑based gallery highlighting features with hover reveals and clean typography.",
+          "Task manager with add/edit/delete, filters, and persistence — clean UI focused on productivity.",
         imageUrl: "/imgs/work2.jpg",
-        href: "http://localhost:3000/",
+        href: "https://todo-list-app-gamma-rouge.vercel.app/",
       },
       {
-        title: "Portfolio Microsite",
+        title: "Aircraft Shooting Game",
         detail:
-          "Minimal microsite focused on performance and accessibility, optimized for Core Web Vitals.",
+          "Arcade‑style shooter with keyboard controls, scoring, and dynamic effects — built for smooth, responsive gameplay.",
         imageUrl: "/imgs/work3.jpg",
-        href: "http://localhost:3000/",
+        href: "https://aircraft-warrior.vercel.app/",
       },
       {
-        title: "E‑commerce Concept",
+        title: "Drawing Freelance Website",
         detail:
-          "Clean product grid, quick views, and motion that supports discovery without distraction.",
+          "Service portfolio with artwork gallery, clear offering details, and contact/booking CTA for commissions.",
         imageUrl: "/imgs/work4.jpg",
-        href: "http://localhost:3000/",
+        href: "https://aomcyne.vercel.app/",
       },
     ],
   },
