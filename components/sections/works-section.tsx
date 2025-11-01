@@ -32,6 +32,8 @@ export function WorksSection({ works }: { works?: WorksData }) {
                 "fv-item group relative overflow-hidden rounded-xl border border-border/60",
                 "bg-muted/20 ring-1 ring-black/0 transition-all duration-500 ease-out",
                 "hover:shadow-xl hover:scale-[1.01] will-change-transform",
+                // Glowing border on hover (match contact cards)
+                "hover:ring-2 hover:ring-white/40 hover:shadow-[0_0_28px_rgba(255,255,255,0.35)]",
                 // Increased card height
                 "h-64 md:h-72 lg:h-80"
               )}
@@ -58,7 +60,7 @@ export function WorksSection({ works }: { works?: WorksData }) {
 
               {/* Content */}
               <div className="relative p-4 md:p-5 text-white h-full flex flex-col justify-end">
-                <div className="relative rounded-xl bg-black/35 group-hover:bg-black/45 backdrop-blur-sm border border-white/10 p-4 md:p-5 transition-colors duration-300">
+                <div className="relative rounded-xl bg-black/35 group-hover:bg-black/45 backdrop-blur-sm border border-white/10 p-4 md:p-5 transition-colors transition-shadow duration-300 hover:ring-2 hover:ring-white/40 hover:shadow-[0_0_26px_rgba(255,255,255,0.35)]">
                   <h3 className="text-xl md:text-2xl font-semibold drop-shadow-sm">
                     {w.title}
                   </h3>
