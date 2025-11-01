@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { smoothScrollToElement } from "@/lib/smooth-scroll";
 import { Button } from "@/components/ui/button";
 import { useHoverHighlight } from "@/hooks/useHoverHighlight";
 import { navigation } from "@/constants/contents";
@@ -107,16 +106,18 @@ export function Navigation({ nav }: { nav?: typeof navigation }) {
     setLang(currentLang);
   }, [currentLang]);
 
-  const handleNavClick = (href: string) => {
-    const element = document.getElementById(href.substring(1));
-    if (element) {
-      const navHeight = 80; // Height of the fixed navbar
-      smoothScrollToElement(element, {
-        offset: navHeight,
-        duration: 850,
-        respectReducedMotion: false,
-      });
-    }
+  // Smooth-scroll only when clicking navbar items (not global wheel)
+  const smoothScrollToHash = (href: string) => {
+    const id = href.startsWith('#') ? href.slice(1) : href;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const navHeight = 80;
+    const rect = el.getBoundingClientRect();
+    const absoluteTop = rect.top + (window.scrollY || window.pageYOffset);
+    const targetY = Math.max(0, absoluteTop - navHeight);
+    // Update URL without triggering default anchor jump
+    history.replaceState(null, '', `#${id}`);
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
 
   return (
@@ -137,7 +138,7 @@ export function Navigation({ nav }: { nav?: typeof navigation }) {
               className="inline-flex items-center gap-2 text-foreground"
               onClick={(e) => {
                 e.preventDefault();
-                handleNavClick("#home");
+                smoothScrollToHash('#home');
               }}
             >
               <Logo className="h-8 md:h-9 w-auto" title={(nav ?? navigation).logo} />
@@ -175,13 +176,10 @@ export function Navigation({ nav }: { nav?: typeof navigation }) {
                   href={item.href}
                   onMouseEnter={(e) => moveTo(e.currentTarget)}
                   onClick={(e) => {
-                    // Prevent default hash navigation; we control scroll
                     e.preventDefault();
-                    // Set active immediately and move highlight
                     setActiveSection(item.href.substring(1));
                     moveTo(e.currentTarget);
-                    // Smooth scroll to section
-                    handleNavClick(item.href);
+                    smoothScrollToHash(item.href);
                   }}
                   className={cn(
                     `relative text-sm transition-colors cursor-pointer px-4 py-3 pb-4`,
@@ -293,17 +291,24 @@ export function Navigation({ nav }: { nav?: typeof navigation }) {
                       <li key={item.href} className="w-full">
                         <Button
                           variant="ghost"
-                          onClick={() => {
-                            handleNavClick(item.href);
-                            setMobileOpen(false);
-                          }}
+                          asChild
                           className={cn(
                             "w-full rounded-none justify-center text-xl text-white/90 hover:text-white hover:bg-white/10 py-8 px-6",
                             activeSection === item.href.substring(1) &&
                               "text-white bg-white/10",
                           )}
                         >
-                          {item.label}
+                          <Link
+                            href={item.href}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              smoothScrollToHash(item.href);
+                              setActiveSection(item.href.substring(1));
+                              setMobileOpen(false);
+                            }}
+                          >
+                            {item.label}
+                          </Link>
                         </Button>
                       </li>
                     ))}

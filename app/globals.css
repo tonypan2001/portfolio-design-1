@@ -146,7 +146,6 @@
         overflow-x: hidden;
     }
     html {
-        scroll-behavior: smooth;
         /* Ensure anchored scroll accounts for fixed navbar height */
         scroll-padding-top: 80px;
         /* Prevent layout shift when scrollbars appear; avoid left gutter */

@@ -130,6 +130,7 @@ export function HeroSection({ cardPosition = "right", hero, heroCard }: HeroSect
             style={{ willChange: "transform", transform: "translateZ(0)" }}
           >
             <Canvas
+              className="pointer-events-none"
               camera={{ position: [0, 0, 5], fov: 50 }}
               dpr={isScrolling ? 1 : [1, 1.5]}
               gl={{ powerPreference: "high-performance", antialias: true }}
